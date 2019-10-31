@@ -75,6 +75,7 @@ function Home() {
             icon={faCog}
             onClick={() => setSettingsPanelOpen(true)}
           ></FontAwesomeIcon>
+          <div className="half-circle"></div>
         </div>
         <div className="home-filtering flex-center">
           <DatePicker

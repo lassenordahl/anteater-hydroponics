@@ -68,10 +68,22 @@
 
     svg {
       font-size: 2em;
+      margin-top: 16px;
     }
 
     svg:hover {
       color: $lightGray;
+    }
+
+    .half-circle {
+      width: 260px;
+      height: 130px;
+      border: 3px solid white;
+      border-top: 0;
+      border-bottom-right-radius: 500px;
+      border-bottom-left-radius: 500px;
+      border-collapse: separate;
+      transform: translateY(-80px);
     }
   }
 
