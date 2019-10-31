@@ -3,24 +3,27 @@
 .Home {
   min-height: 100vh;
   min-width: 100vw;
-  display: grid;
-  grid-template-rows: 15% 85%;
-  grid-template-columns: 30% 70%;
   color: $white;
-  background-image: linear-gradient(to bottom right, rgba(255, 80, 11, 0.705), #ce1a1a);
+  position: fixed;
+  z-index: 0;
   // background-color: $greenMain;
+
+  .home-layout {
+    grid-template-rows: 15% 85%;
+    grid-template-columns: 30% 70%;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: grid;
+  }
 
   h1 {
     margin-bottom: 0;
   }
 
   .home-particles-container {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-
     canvas {
-      position: absolute;
+      position: fixed;
+      z-index: -1;
     }
 
     .home-particles {
@@ -72,7 +75,7 @@
     }
   }
 
-  .home-layout {
+  .home-card-layout {
     display: grid;
     height: 100%;
     width: 100%;

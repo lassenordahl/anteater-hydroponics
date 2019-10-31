@@ -7,6 +7,8 @@
   color: $fontColor;
   font-family: $font;
   overflow-y: auto;
+  background-image: linear-gradient(to bottom right, rgba(255, 80, 11, 0.705), #ce1a1a);
+
 
   h1              { font-size: 2.5em; margin: .67em 0 }
   h2              { font-size: 2em; margin: .75em 0 }

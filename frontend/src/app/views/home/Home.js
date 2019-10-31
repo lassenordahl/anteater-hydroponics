@@ -57,56 +57,58 @@ function Home() {
           params={particlesParams}
         />
       </div>
-      <div className="home-header"> 
-        <h1>
-          Anteater Hydroponics
-        </h1>
-        <p>
-          IoT Project by Lasse Nordahl and Jesse Chong
-        </p>
-      </div>
-      <div className="home-animated-tree flex-center">
-        <img src={treeImage}></img>
-        <h2>
-          Tomato Plant
-        </h2>
-        <FontAwesomeIcon 
-          icon={faCog}
-          onClick={() => setSettingsPanelOpen(true)}
-        ></FontAwesomeIcon>
-      </div>
-      <div className="home-filtering flex-center">
-        <DatePicker
-          label="From"
-        >
-
-        </DatePicker>
-        <DatePicker
-          label="To"
-        >
-
-        </DatePicker>
-      </div>
       <div className="home-layout">
-        <div>
-          <Card className="graph-card" title="Light Sensor">
-            <Line data={data}/>
-          </Card>
+        <div className="home-header"> 
+          <h1>
+            Anteater Hydroponics
+          </h1>
+          <p>
+            IoT Project by Lasse Nordahl and Jesse Chong
+          </p>
         </div>
-        <div>
-          <Card className="graph-card" title="Humidity Sensor">
-            <Line data={data}/>
-          </Card>
+        <div className="home-animated-tree flex-center">
+          <img src={treeImage}></img>
+          <h2>
+            Tomato Plant
+          </h2>
+          <FontAwesomeIcon 
+            icon={faCog}
+            onClick={() => setSettingsPanelOpen(true)}
+          ></FontAwesomeIcon>
         </div>
-        <div>
-          <Card className="graph-card" title="Water Levels">
-            <Line data={data}/>
-          </Card>
+        <div className="home-filtering flex-center">
+          <DatePicker
+            label="From"
+          >
+
+          </DatePicker>
+          <DatePicker
+            label="To"
+          >
+
+          </DatePicker>
         </div>
-        <div>
-          <Card className="graph-card" title="Temperature Sensor">
-            <Line data={data}/>
-          </Card>
+        <div className="home-card-layout">
+          <div>
+            <Card className="graph-card" title="Light Sensor">
+              <Line data={data}/>
+            </Card>
+          </div>
+          <div>
+            <Card className="graph-card" title="Humidity Sensor">
+              <Line data={data}/>
+            </Card>
+          </div>
+          <div>
+            <Card className="graph-card" title="Water Levels">
+              <Line data={data}/>
+            </Card>
+          </div>
+          <div>
+            <Card className="graph-card" title="Temperature Sensor">
+              <Line data={data}/>
+            </Card>
+          </div>
         </div>
       </div>
       <Modal
