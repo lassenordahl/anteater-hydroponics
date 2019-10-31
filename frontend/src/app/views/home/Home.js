@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import './Home.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { DatePicker, Modal } from 'react-rainbow-components';
+import { Line } from 'react-chartjs-2';
+import P5Wrapper from 'react-p5-wrapper';
 import Particles from 'react-particles-js';
 import particlesParams from 'globals/particles-config.js';
 import treeImage from './../../assets/tree.jpg';
@@ -9,11 +14,7 @@ import {
   Card
 } from 'app/containers';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { DatePicker, Modal } from 'react-rainbow-components';
-import { Line } from 'react-chartjs-2';
-
+import sketch from 'app/sketches/sketch.js';
 
 function Home() {
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
@@ -67,7 +68,8 @@ function Home() {
           </p>
         </div>
         <div className="home-animated-tree flex-center">
-          <img src={treeImage}></img>
+          <P5Wrapper sketch={sketch}></P5Wrapper>
+          {/* <img src={treeImage}></img> */}
           <h2>
             Tomato Plant
           </h2>
