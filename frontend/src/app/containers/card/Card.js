@@ -1,11 +1,14 @@
 import React from "react";
 import './Card.scss';
-
 function Card(props) {
+
   return (
-    <div className="Card box-shadow" style={props.style}>
+    <div className={props.className + " Card box-shadow"} style={props.style}>
       <div>
-        this is a card
+        <h3>
+          {props.title}
+        </h3>
+        {props.children}
       </div>
     </div>
   );

@@ -3,9 +3,15 @@
 .Card {
   background-color: $white;
   display: flex;
+  color: $darkGray;
 
   & > div {
     flex: 1 1;
-    margin: $mediumSpacing;
+    margin: $smallSpacing;
+
+    h3 {
+      margin-top: 0;
+      font-weight: 400;
+    }
   }
 }

@@ -71,11 +71,11 @@ export default {
     "detect_on": "canvas",
     "events": {
       "onhover": {
-        "enable": true,
+        "enable": false,
         "mode": "repulse"
       },
       "onclick": {
-        "enable": true,
+        "enable": false,
         "mode": "push"
       },
       "resize": true
@@ -92,7 +92,7 @@ export default {
         "size": 40,
         "duration": 2,
         "opacity": 8,
-        "speed": 3
+        "speed": 1
       },
       "repulse": {
         "distance": 200,
