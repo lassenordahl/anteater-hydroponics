@@ -5,6 +5,16 @@ Occupancy App environment styles.
 
 **/
 
+$phoneSize: 500px;
+$laptopSize: 1200px;
+$tabletSize: 800px;
+
+// Spacing
+$largeSpacing: 64px;
+$mediumSpacing: 36px;
+$smallSpacing: 24px;
+$tinySpacing: 12px;
+$microSpacing: 8px;
 
 // Temporary Appwide Style Variables
 $fontColor: #2e2e2e;
@@ -19,6 +29,7 @@ $blueMain: #2749c4;
 $blueHighlight: #5b7bf0;
 $redMain: #eb2a3a;
 $redHighlight: #fc626f;
+$greenMain: #3feb64;
 
 // Main Colors
 $white: #ffffff;
@@ -30,6 +41,7 @@ $darkGray: #2e2e2e;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .flex-split {

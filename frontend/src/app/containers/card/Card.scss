@@ -1,0 +1,11 @@
+@import "globals/ahp-styles.scss";
+
+.Card {
+  background-color: $white;
+  display: flex;
+
+  & > div {
+    flex: 1 1;
+    margin: $mediumSpacing;
+  }
+}
