@@ -1,0 +1,14 @@
+@import "globals/occupancy-styles.scss";
+
+.App {
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: $background;
+  color: $fontColor;
+  font-family: $font;
+  overflow-y: auto;
+
+  h3 {
+    font-size: 40px;
+  }
+}
