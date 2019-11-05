@@ -2,6 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import history from './history';
 import './App.scss';
+import leaf from 'app/assets/leaf.png';
 
 import {
   Home
@@ -18,18 +19,26 @@ import {
 //   // '#7F7FD5',
 // ];
 
+// const gradients = [
+//   '#291e30',
+//   '#654ea3',
+//   '#eaafc8',
+//   '#ee9ca7',
+//   '#6DD5FA',
+//   '#2980B9',
+//   // '#f7b733',
+//   '#fc4a1a',
+//   '#C33764',
+//   '#1D2671',
+//   '#2F0743'
+// ];
+
 const gradients = [
-  '#291e30',
-  '#654ea3',
-  '#eaafc8',
-  '#ee9ca7',
-  '#6DD5FA',
-  '#2980B9',
-  '#f7b733',
-  '#fc4a1a',
-  '#C33764',
-  '#1D2671',
-  '#2F0743'
+  // '#31de84',
+  '#33b572',
+  '#2c89e6',
+  '#eb4255',
+  '#251c69',
 ];
 
 function App() {
@@ -40,9 +49,9 @@ function App() {
   useEffect(() => {
     const interval = setInterval(function() {
       console.log('in interval?', currentLeft, currentRight);
-      setCurrentLeft(currentLeft < gradients.length ? currentLeft + 1 : 0);
-      setCurrentRight(currentRight < gradients.length ? currentRight + 1 : 0);
-    }, 5000);
+      setCurrentLeft(currentLeft < gradients.length - 1 ? currentLeft + 1 : 0);
+      setCurrentRight(currentRight < gradients.length - 1 ? currentRight + 1 : 0);
+    }, 10000);
     return () => clearInterval(interval);
   });
 
