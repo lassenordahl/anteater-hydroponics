@@ -26,8 +26,9 @@ function Card(props) {
             {props.title}
           </h3>
         </div>
-       
-        {props.children}
+        <div style={{'position': 'relative'}}>
+          {props.children}
+        </div>
       </div>
     </div>
   );

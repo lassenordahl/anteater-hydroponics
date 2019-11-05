@@ -9,11 +9,17 @@
   // background-color: $greenMain;
 
   .home-layout {
-    grid-template-rows: 15% 85%;
-    grid-template-columns: 30% 70%;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
     min-width: 100vw;
-    display: grid;
+
+    @media screen and (min-width: $tabletSize) {
+      display: grid;
+      grid-template-rows: 15% 85%;
+      grid-template-columns: 30% 70%;
+    }
   }
 
   h1 {
@@ -33,34 +39,61 @@
   }
 
   .home-header {
-    grid-column-start: 1;
-    grid-column-end: 2;
+    
     margin-left: $mediumSpacing;
     margin-top: $tinySpacing;
+
+
+    @media screen and (min-width: $tabletSize) {
+      grid-column-start: 1;
+      grid-column-end: 2;
+    } 
   }
 
   .home-filtering {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
     display: flex;
     justify-content: center;
-    flex-direction: row;
+    align-items: center;
+    flex-direction: column;
+    margin-left: $largeSpacing;
+    margin-right: $largeSpacing;
+
+    @media screen and (min-width: $tabletSize) {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      margin-left: 0;
+      margin-right: 0;
+    }
 
     & > div {
       label {
         color: white;
       }
-      margin-right: $largeSpacing;
+      @media screen and (min-width: $tabletSize) {
+        margin-right: $largeSpacing;
+      }
+    }
+
+    & > div:last-child {
+      @media screen and (max-width: $tabletSize) {
+        margin-top: $mediumSpacing;
+      }
     }
   }
 
   .home-animated-tree {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
+
+    @media screen and (min-width: $tabletSize) {
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
 
     h2 {
       margin-bottom: $tinySpacing;
@@ -88,29 +121,37 @@
   }
 
   .home-card-layout {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    width: 100%;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-gap: $largeSpacing;
-    margin-right: $largeSpacing;
-    margin-bottom: $largeSpacing;
+    width: 100%;   
+    margin-top: $largeSpacing; 
 
-    @media screen and (max-width: $tabletSize) {
-      grid-template-columns: 100%;
+    @media screen and (min-width: $tabletSize) {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 50% 50%;
+      grid-gap: $largeSpacing;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;  
+      margin-right: $largeSpacing;
+      margin-bottom: $largeSpacing;   
+      // Subtract sub margins and grid gap
+      width: calc(100% - 128px);
+      height: calc(100% - 128px);
+      margin-top: 0;
     }
-
-    // Subtract sub margins and grid gap
-    width: calc(100% - 128px);
-    height: calc(100% - 128px);
 
     & > div {
       display: flex;
+
+      @media screen and (max-width: $tabletSize) {
+        margin-bottom: $largeSpacing;
+        margin-left: $largeSpacing;
+        margin-right: $largeSpacing;
+      }
 
       .graph-card {
         flex: 1 1;

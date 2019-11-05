@@ -20,7 +20,7 @@ function Home() {
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
 
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['January', 'February', 'March'],
     datasets: [
       {
         label: 'My First dataset',
@@ -93,22 +93,22 @@ function Home() {
         </div>
         <div className="home-card-layout">
           <div>
-            <Card className="graph-card" title="Light Sensor">
+            <Card className="graph-card" title="Light Sensor" style={{'position': 'relative'}}>
               <Line data={data}/>
             </Card>
           </div>
           <div>
-            <Card className="graph-card" title="Humidity Sensor">
+            <Card className="graph-card" title="Humidity Sensor" style={{'position': 'relative'}}>
               <Line data={data}/>
             </Card>
           </div>
           <div>
-            <Card className="graph-card" title="Water Levels">
+            <Card className="graph-card" title="Water Levels" style={{'position': 'relative'}}>
               <Line data={data}/>
             </Card>
           </div>
           <div>
-            <Card className="graph-card" title="Temperature Sensor">
+            <Card className="graph-card" title="Temperature Sensor" style={{'position': 'relative'}}>
               <Line data={data}/>
             </Card>
           </div>
