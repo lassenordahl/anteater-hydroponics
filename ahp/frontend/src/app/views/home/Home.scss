@@ -1,0 +1,184 @@
+@import "globals/ahp-styles.scss";
+
+.Home {
+  min-height: 100vh;
+  min-width: 100vw;
+  color: $white;
+  position: fixed;
+  z-index: 0;
+  // background-color: $greenMain;
+
+  .home-layout {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
+    min-width: 100vw;
+
+    @media screen and (min-width: $tabletSize) {
+      display: grid;
+      grid-template-rows: 15% 85%;
+      grid-template-columns: 30% 70%;
+    }
+  }
+
+  h1 {
+    margin-bottom: 0;
+  }
+
+  .home-particles-container {
+    canvas {
+      position: fixed;
+      z-index: -1;
+    }
+
+    .home-particles {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .home-header {
+    display: flex;
+    flex-direction: row;
+    margin-left: $mediumSpacing;
+    margin-top: $tinySpacing;
+
+    h1 {
+      font-size: 2.4em;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      margin-top: 37px;
+      margin-right: $smallSpacing;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    @media screen and (min-width: $tabletSize) {
+      grid-column-start: 1;
+      grid-column-end: 2;
+    } 
+  }
+
+  .home-filtering {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: $largeSpacing;
+    margin-right: $largeSpacing;
+
+    @media screen and (min-width: $tabletSize) {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    & > div {
+      label {
+        color: white;
+      }
+      @media screen and (min-width: $tabletSize) {
+        margin-right: $largeSpacing;
+      }
+    }
+
+    & > div:last-child {
+      @media screen and (max-width: $tabletSize) {
+        margin-top: $mediumSpacing;
+      }
+    }
+  }
+
+  .home-animated-tree {
+
+    @media screen and (min-width: $tabletSize) {
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
+
+    h2 {
+      margin-bottom: $tinySpacing;
+    }
+
+    svg {
+      font-size: 2em;
+      margin-top: 16px;
+    }
+
+    svg:hover {
+      color: $lightGray;
+    }
+
+    .half-circle {
+      width: 260px;
+      height: 130px;
+      border: 3px solid white;
+      border-top: 0;
+      border-bottom-right-radius: 500px;
+      border-bottom-left-radius: 500px;
+      border-collapse: separate;
+      transform: translateY(-80px);
+    }
+  }
+
+  .home-card-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;   
+    margin-top: $largeSpacing; 
+
+    @media screen and (min-width: $tabletSize) {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 50% 50%;
+      grid-gap: $largeSpacing;
+      grid-column-start: 2;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 3;  
+      margin-right: $largeSpacing;
+      margin-bottom: $largeSpacing;   
+      // Subtract sub margins and grid gap
+      width: calc(100% - 128px);
+      height: calc(100% - 128px);
+      margin-top: 0;
+    }
+
+    & > div {
+      display: flex;
+
+      @media screen and (max-width: $tabletSize) {
+        margin-bottom: $largeSpacing;
+        margin-left: $largeSpacing;
+        margin-right: $largeSpacing;
+      }
+
+      .graph-card {
+        flex: 1 1;
+        transition: all .2s;
+      }
+
+      .graph-card:hover {
+        transform: scale(1.03);
+        transition: all .2s;
+      }
+    }
+  }
+}

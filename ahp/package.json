@@ -1,0 +1,12 @@
+{
+  "name": "anteater-hydroponics-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run build-app && node server",
+    "start-local": "npm run build-app && PORT=8080 node server",
+    "build-app": "cd frontend && npm run build && cd .."
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}

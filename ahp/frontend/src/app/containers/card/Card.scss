@@ -1,0 +1,30 @@
+@import "globals/ahp-styles.scss";
+
+.Card {
+  background-color: $white;
+  display: flex;
+  color: $darkGray;
+
+  & > div {
+    flex: 1 1;
+    margin: $smallSpacing;
+
+    .card-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      svg {
+        margin-bottom: 17px;
+        margin-right: $tinySpacing;
+        font-size: 1.4em;
+      }
+    }
+
+    h3 {
+      margin-top: 0;
+      font-weight: 400;
+    }
+  }
+}

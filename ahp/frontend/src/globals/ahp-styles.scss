@@ -1,0 +1,74 @@
+/**
+
+Occupancy App environment styles.
+
+
+**/
+
+$phoneSize: 500px;
+$laptopSize: 1200px;
+$tabletSize: 800px;
+
+// Spacing
+$largeSpacing: 64px;
+$mediumSpacing: 36px;
+$smallSpacing: 24px;
+$tinySpacing: 12px;
+$microSpacing: 8px;
+
+// Temporary Appwide Style Variables
+$fontColor: #2e2e2e;
+$errorColor: #a31e1e;
+$font: Montserrat, sans-serif;
+
+// Backgrounds
+$background: #f7f9ff;
+
+// Color Profiles
+$blueMain: #2749c4;
+$blueHighlight: #5b7bf0;
+$redMain: #eb2a3a;
+$redHighlight: #fc626f;
+$greenMain: #3feb64;
+
+// Main Colors
+$white: #ffffff;
+$black: #000000;
+$darkGray: #2e2e2e;
+$lightGray: #d1d1d1;
+
+// Helper Classes 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.flex-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-shadow { 
+  box-shadow: 3px 10px 18px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-corner {
+  border-radius: 10px;
+}
+
+.fill-container {
+  width: 100%;
+  height: 100%;
+}
+
+.fill-view {
+  width: 100vw;
+  height: 100vh;
+}
+
+.center-text {
+  text-align: center;
+}
