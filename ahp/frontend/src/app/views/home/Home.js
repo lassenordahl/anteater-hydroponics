@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Home.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -46,6 +46,16 @@ function Home() {
       }
     ]
   };
+
+  useEffect(() => {
+    fetch('/test') 
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+  }, []);
 
   return (
     <div className="Home">
