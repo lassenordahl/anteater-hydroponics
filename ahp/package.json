@@ -1,12 +1,17 @@
 {
-  "name": "anteater-hydroponics-project",
+  "name": "kmail",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "npm run build-app && node server",
-    "start-local": "npm run build-app && PORT=8080 node server",
-    "build-app": "cd frontend && npm run build && cd .."
+    "frontend": "cd frontend && npm start",
+    "server": "cd server && npm start",
+    "start": "concurrently \"npm run server\" \"npm run frontend\" --kill-others"
   },
-  "dependencies": {
-    "express": "^4.16.2"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "3.5.1"
   }
 }
