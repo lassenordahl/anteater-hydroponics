@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import './DataCard.scss';
 
 import { Line } from 'react-chartjs-2';
+<<<<<<< HEAD
+=======
+import axios from 'axios';
+>>>>>>> oop
 
 import {
   Card
@@ -37,8 +41,20 @@ const data = {
 function DataCard(props) {
 
   useEffect(() => {
-    
+    if (props.plant !== null) {
+      getData(plant, endpoint);
+    }
   }, []);
+
+  function getData(plant, endpoint) {
+    axios.get(`/api/plant/${plant.plantId}/${endpoint}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 
   return (
     <Card className="DataCard" title={props.title} style={{'position': 'relative'}}>
