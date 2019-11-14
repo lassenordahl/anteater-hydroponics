@@ -48,7 +48,6 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(function() {
-      console.log('in interval?', currentLeft, currentRight);
       setCurrentLeft(currentLeft < gradients.length - 1 ? currentLeft + 1 : 0);
       setCurrentRight(currentRight < gradients.length - 1 ? currentRight + 1 : 0);
     }, 10000);

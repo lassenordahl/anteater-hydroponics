@@ -48,7 +48,7 @@ function Home() {
   };
 
   useEffect(() => {
-    fetch('/test') 
+    fetch('/api/plant') 
       .then(response => {
         return response.json();
       })
