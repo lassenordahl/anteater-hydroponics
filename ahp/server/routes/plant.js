@@ -2,6 +2,9 @@ var express = require('express');
 var uuid = require('node-uuid');
 var router = express.Router();
 var AWS = require('aws-sdk');
+var mysql = require('mysql');
+let config = require('./../config');
+let connection = mysql.createConnection(config);
 
 AWS.config.getCredentials(function(err) {
   if (err) console.log(err.stack);
@@ -31,7 +34,7 @@ router.get('/', function(req, res, next) {
   ddb.scan(params, function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
       res.send([])
     } else {
       res.sendStatus(200);
@@ -42,7 +45,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:plantId', function(req, res, next) {
   if (req.params.plantId === undefined) {
-    res.status(500);
+    res.status(400);
     res.send('Invalid query params');
   }
 
@@ -61,7 +64,7 @@ router.get('/:plantId', function(req, res, next) {
   ddb.get(params, function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
       res.send('No plant found at given plantId')
     } else {
       res.sendStatus(200);
@@ -72,7 +75,7 @@ router.get('/:plantId', function(req, res, next) {
 
 router.post('/:plantId', function(req, res, next) {
   if (req.params.plantId === undefined) {
-    res.status(500);
+    res.status(400);
     res.send('PlantId not given');
   }
 
@@ -87,6 +90,13 @@ router.post('/:plantId', function(req, res, next) {
         'light': req.body.thresholds.light,
         'temperature': req.body.thresholds.temperature
       },
+      'averages': {
+        'humidity': 0,
+        'water': 0,
+        'light': 0,
+        'temperature': 0
+      },
+      'dataPoints': 0,
       'dateCreated': new Date().toISOString()
     }
   }
@@ -94,7 +104,7 @@ router.post('/:plantId', function(req, res, next) {
   ddb.put(params, function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
       res.send('Unable to post plant');
     } else {
       res.sendStatus(200);
@@ -124,14 +134,68 @@ router.post('/:plantId/data', function(req, res, next) {
     }
   }
 
+  var getPlantParams = {
+    TableName: tableName,
+    Key: {
+      'plantId': parseInt(req.params.plantId)
+    },
+    AttributesToGet: [
+      'averages',
+      'dataPoints'
+    ]
+  }
+
   ddb.put(params, function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
       res.send('Unable to post plant');
     } else {
+
+      // Recalculate the running averages for the other table
+
+      ddb.get(getPlantParams, function(err, data) {
+        if (err) {
+          res.sendStatus(400);
+          res.send()
+        } else {
+          
+        }
+      })
+
       res.sendStatus(200);
       res.send(parseInt(req.params.plantId));
+    }
+  })
+});
+
+router.get('/:plantId/data/:thresholdType/average', function(req, res, next) {
+  if (req.params.plantId === undefined ||
+      req.params.thresholdType === undefined) {
+    res.status(400);
+    res.send('Invalid query params');
+  }
+
+  var params = {
+    TableName: dataTableName,
+    Key: {
+      'plantId': parseInt(req.params.plantId)
+    },
+    AttributesToGet: [
+      'plantId',
+      'plantType',
+      'thresholds'
+    ]
+  }
+
+  ddb.get(params, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      res.send('No plant found at given plantId')
+    } else {
+      res.sendStatus(200);
+      res.send(data);
     }
   })
 });
