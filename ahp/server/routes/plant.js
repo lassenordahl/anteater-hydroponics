@@ -236,7 +236,12 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
           average: 0
         });
       } else {
-        res.send(data);
+        let return_data = data.map(function(point) { return point[type] });
+        let return_timestamps = data.map(function(point) { return point.timestamp });
+        res.send({
+          points: return_data,
+          timestamps: return_timestamps
+        });
       }
     }
   });

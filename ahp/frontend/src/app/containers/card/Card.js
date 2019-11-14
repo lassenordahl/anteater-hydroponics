@@ -21,7 +21,10 @@ function Card(props) {
     <div className={props.className + " Card box-shadow"} style={props.style}>
       <div>
         <div className="card-header">
-          <FontAwesomeIcon icon={getIcon(props.title)}/> 
+          <FontAwesomeIcon 
+            icon={getIcon(props.title)} 
+            style={{color: `rgba(${props.color.r},${props.color.g},${props.color.b},1)`}}
+          /> 
           <h3>
             {props.title}
           </h3>

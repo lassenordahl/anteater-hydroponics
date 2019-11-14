@@ -15,19 +15,39 @@ import {
 const dataCards = [
   {
     title: "Light Sensor",
-    endpoint: "light"
+    endpoint: "light",
+    color: {
+      r: 255,
+      g: 155,
+      b: 41
+    }
   },
   {
     title: "Humidity Sensor",
-    endpoint: "humidity"
+    endpoint: "humidity",
+    color: {
+      r: 109,
+      g: 222,
+      b: 216
+    }
   },
   {
     title: "Water Levels",
-    endpoint: "water"
+    endpoint: "water",
+    color: {
+      r: 3,
+      g: 165,
+      b: 252
+    }
   },
   {
     title: "Temperature Sensor",
-    endpoint: "temperature"
+    endpoint: "temperature",
+    color: {
+      r: 242,
+      g: 70,
+      b: 70
+    }
   }
 ]
 
@@ -100,13 +120,14 @@ function Home(props) {
           </DatePicker>
         </div>
         <div className="home-card-layout">
-          {dataCards.map(function(dataCard) {
+          {dataCards.map(function(dataCard, index) {
             return (
-              <div>
+              <div key={index}>
                 <DataCard 
                   plant={plant}
                   title={dataCard.title} 
                   endpoint={dataCard.endpoint}
+                  color={dataCard.color}
                 ></DataCard>
               </div>
             );
