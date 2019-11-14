@@ -1,10 +1,10 @@
 var express = require('express');
 var uuid = require('node-uuid');
-var router = express.Router();
 var AWS = require('aws-sdk');
-var mysql = require('mysql');
-let config = require('./../config');
-let connection = mysql.createConnection(config);
+var sql = require('./../db');
+
+var router = express.Router();
+
 
 AWS.config.getCredentials(function(err) {
   if (err) console.log(err.stack);
@@ -37,7 +37,6 @@ router.get('/', function(req, res, next) {
       res.sendStatus(400);
       res.send([])
     } else {
-      res.sendStatus(200);
       res.send(data);
     }
   })
@@ -47,6 +46,7 @@ router.get('/:plantId', function(req, res, next) {
   if (req.params.plantId === undefined) {
     res.status(400);
     res.send('Invalid query params');
+    return;
   }
 
   var params = {
@@ -67,7 +67,6 @@ router.get('/:plantId', function(req, res, next) {
       res.sendStatus(400);
       res.send('No plant found at given plantId')
     } else {
-      res.sendStatus(200);
       res.send(data);
     }
   })
@@ -77,6 +76,7 @@ router.post('/:plantId', function(req, res, next) {
   if (req.params.plantId === undefined) {
     res.status(400);
     res.send('PlantId not given');
+    return;
   }
 
   var params = {
@@ -107,7 +107,6 @@ router.post('/:plantId', function(req, res, next) {
       res.sendStatus(400);
       res.send('Unable to post plant');
     } else {
-      res.sendStatus(200);
       res.send(parseInt(req.params.plantId));
     }
   })
@@ -119,85 +118,128 @@ router.post('/:plantId/data', function(req, res, next) {
     res.send('PlantId not given');
   }
 
-  console.log(uuid.v1().toString())
+  let values = [[
+    parseInt(req.params.plantId),
+    req.body.humidity,
+    req.body.light,
+    req.body.water,
+    req.body.temperature
+  ]];
 
-  var params = {
-    TableName: dataTableName,
-    Item: {
-      'id': uuid.v1().toString(),
-      'plantId': parseInt(req.params.plantId),
-      'humidity': req.body.humidity,
-      'light': req.body.light,
-      'water': req.body.water,
-      'temperature': req.body.temperature,
-      'timestamp': new Date().toISOString()
-    }
-  }
-
-  var getPlantParams = {
-    TableName: tableName,
-    Key: {
-      'plantId': parseInt(req.params.plantId)
-    },
-    AttributesToGet: [
-      'averages',
-      'dataPoints'
-    ]
-  }
-
-  ddb.put(params, function(err, data) {
+  let query = "INSERT INTO plantData (plantId, humidity, light, water, temperature) VALUES ?";
+  sql.query(query, [values], function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(400);
-      res.send('Unable to post plant');
+      res.sendStatus(500);
     } else {
-
-      // Recalculate the running averages for the other table
-
-      ddb.get(getPlantParams, function(err, data) {
-        if (err) {
-          res.sendStatus(400);
-          res.send()
-        } else {
-          
-        }
-      })
-
       res.sendStatus(200);
-      res.send(parseInt(req.params.plantId));
     }
-  })
+  });
 });
 
-router.get('/:plantId/data/:thresholdType/average', function(req, res, next) {
+router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, next) {
+  if (req.params.plantId === undefined ||
+      req.params.thresholdType === undefined) {
+    res.sendStatus(400);
+    res.end();
+    return;
+    // res.send('Invalid query params');
+  }
+
+  let id = req.params.plantId;
+  let type = req.params.thresholdType;
+  let aggregateType = req.params.aggregateType;
+  let queryAggregation = '';
+  let fromDate = req.query.fromDate;
+  let toDate = req.query.toDate;
+  let dateQuery = '';
+
+  if (fromDate !== undefined) {
+    dateQuery += 'AND timestamp >= \'' + fromDate + '\' ';
+  }
+  if (toDate !== undefined) {
+    dateQuery += 'AND timestamp <= \'' + toDate + '\'';
+  }
+
+  if (aggregateType === 'average') {
+    queryAggregation = 'AVG';
+  } else if (aggregateType === 'maximum') {
+    queryAggregation = 'MAX';
+  } else if (aggregateType === 'minimum') {
+    queryAggregation = 'MIN';
+  }  else if (aggregateType === 'count') {
+    queryAggregation = 'COUNT';
+  } else {
+    res.sendStatus(400);
+    res.end();
+    return;
+    // res.send('Invalid aggregation params');
+  }
+
+  let query = 
+  `SELECT plantId, ${queryAggregation}(${type}) as ${aggregateType} FROM plantData\
+  WHERE plantId=${id} ${dateQuery} GROUP BY plantId`;
+
+  console.log(query);
+
+  sql.query(query, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      res.end();
+    } else {
+      if (data.length === 0) {
+        res.send({
+          id: parseInt(req.params.plantId),
+          average: 0
+        });
+      } else {
+        res.send(data[0]);
+      }
+    }
+  });
+});
+
+router.get('/:plantId/data/:thresholdType', function(req, res, next) {
   if (req.params.plantId === undefined ||
       req.params.thresholdType === undefined) {
     res.status(400);
     res.send('Invalid query params');
+    return;
   }
 
-  var params = {
-    TableName: dataTableName,
-    Key: {
-      'plantId': parseInt(req.params.plantId)
-    },
-    AttributesToGet: [
-      'plantId',
-      'plantType',
-      'thresholds'
-    ]
+  let id = req.params.plantId;
+  let type = req.params.thresholdType;
+  let fromDate = req.query.fromDate;
+  let toDate = req.query.toDate;
+  let dateQuery = '';
+
+  if (fromDate !== undefined) {
+    dateQuery += 'AND timestamp >= \'' + fromDate + '\' ';
+  }
+  if (toDate !== undefined) {
+    dateQuery += 'AND timestamp <= \'' + toDate + '\'';
   }
 
-  ddb.get(params, function(err, data) {
+  let query = 
+  `SELECT id, ${type}, timestamp FROM plantData\
+  WHERE plantId=${id} ${dateQuery}`;
+
+  sql.query(query, function(err, data) {
     if (err) {
       console.log(err);
       res.sendStatus(500);
-      res.send('No plant found at given plantId')
     } else {
-      res.sendStatus(200);
-      res.send(data);
+      if (data.length === 0) {
+        res.send({
+          id: parseInt(req.params.plantId),
+          average: 0
+        });
+      } else {
+        res.send(data);
+      }
     }
-  })
+  });
 });
 
 

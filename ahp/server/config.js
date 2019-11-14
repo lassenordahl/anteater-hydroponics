@@ -1,8 +1,10 @@
 let config = {
-  host    : 'ahp-new-instance-1-us-west-1a.c070erriswmc.us-west-1.rds.amazonaws.com',
+  host    : 'ahp-instance-1.c5zn6vlnxda7.us-east-1.rds.amazonaws.com',
   user    : 'admin',
-  password: 'beelboop123',
-  database: 'ahp'
+  password: 'beepboop123',
+  database: 'ahp',
+  port: 3306,
+  ssl: true,
 };
  
 module.exports = config;
