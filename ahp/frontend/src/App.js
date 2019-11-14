@@ -41,18 +41,22 @@ const gradients = [
   '#251c69',
 ];
 
+// const gradients = [
+//   '#f7f9ff'
+// ];
+
 function App() {
 
   const [currentLeft, setCurrentLeft] = useState(0);
   const [currentRight, setCurrentRight] = useState(1);
 
-  useEffect(() => {
-    const interval = setInterval(function() {
-      setCurrentLeft(currentLeft < gradients.length - 1 ? currentLeft + 1 : 0);
-      setCurrentRight(currentRight < gradients.length - 1 ? currentRight + 1 : 0);
-    }, 10000);
-    return () => clearInterval(interval);
-  });
+  // useEffect(() => {
+  //   const interval = setInterval(function() {
+  //     setCurrentLeft(currentLeft < gradients.length - 1 ? currentLeft + 1 : 0);
+  //     setCurrentRight(currentRight < gradients.length - 1 ? currentRight + 1 : 0);
+  //   }, 10000);
+  //   return () => clearInterval(interval);
+  // });
 
   function getGradient(left, right) {
     return {
@@ -62,7 +66,8 @@ function App() {
   }
 
   return (
-    <div className='App' style={getGradient(currentLeft, currentRight)}>
+    // style={getGradient(currentLeft, currentRight)}
+    <div className='App' >
       <Router history={history}>
         <Switch>
           <Route exact path='/:plantId' component={Home}/>

@@ -130,7 +130,7 @@ router.post('/:plantId/data', function(req, res, next) {
   sql.query(query, [values], function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
     } else {
       res.sendStatus(200);
     }
@@ -185,7 +185,7 @@ router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, ne
   sql.query(query, function(err, data) {
     if (err) {
       console.log(err);
-      res.sendStatus(500);
+      res.sendStatus(400);
       res.end();
     } else {
       if (data.length === 0) {

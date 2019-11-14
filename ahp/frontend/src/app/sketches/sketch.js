@@ -6,7 +6,7 @@ export default function sketch (p) {
   let width = 200;
   let canvas_height = 400;
   let plant_height = 600;
-  let node_size = 7;
+  let node_size = 10;
 
   let branch_points = [
     plant_height / 4,
@@ -18,7 +18,7 @@ export default function sketch (p) {
   let branch_droopiness = 7;
 
   let random_tomato_locations = branch_points.map(function() {
-    return Math.floor(Math.random() * (branch_length - 10)) + 10;
+    return Math.floor(Math.random() * (branch_length - 10)) + 20;
   });
 
   let angle = 0
@@ -93,7 +93,8 @@ export default function sketch (p) {
     p.noStroke();
 
     for (let i = 50; i < plant_height; i += 1) {
-      p.fill(255);
+      // p.fill(255);
+      p.fill('#52bf61');
 
 
       // Draw the main ellipse

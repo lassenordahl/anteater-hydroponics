@@ -36,7 +36,6 @@ function PlantInfo(props) {
             Invalid Plant ID
           </h2>
         </React.Fragment>
-        
       }
       <FontAwesomeIcon 
         icon={faCog}

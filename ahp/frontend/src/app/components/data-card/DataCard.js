@@ -32,7 +32,9 @@ function DataCard(props) {
     axios.get(`/api/plant/${plant.plantId}/data/${endpoint}`)
       .then(function (response) {
         console.log(response.data);
-        setData(response.data);
+        if (response.data.points !== undefined && response.data.timestamps !== undefined) {
+          setData(response.data);
+        }
       })
       .catch(function(error) {
         console.log(error);
