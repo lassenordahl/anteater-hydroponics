@@ -62,12 +62,12 @@ router.get('/:plantId', function(req, res, next) {
   }
 
   ddb.get(params, function(err, data) {
-    if (err) {
+    if (err || data.Item === undefined) {
       console.log(err);
       res.sendStatus(400);
-      res.send('No plant found at given plantId')
+      return;
     } else {
-      res.send(data);
+      res.send(data.Item);
     }
   })
 });

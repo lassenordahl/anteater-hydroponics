@@ -1,61 +1,61 @@
 import React, { useState, useEffect } from "react";
 import './Home.scss';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { DatePicker, Modal } from 'react-rainbow-components';
-import { Line } from 'react-chartjs-2';
-import P5Wrapper from 'react-p5-wrapper';
 import Particles from 'react-particles-js';
+import axios from "axios";
 import particlesParams from 'globals/particles-config.js';
-import treeImage from './../../assets/tree.jpg';
 import ahp_logo from './../../assets/ahp_logo.png';
 
 import {
-  Card
-} from 'app/containers';
+  PlantInfo,
+  DataCard
+} from 'app/components';
 
-import sketch from 'app/sketches/sketch.js';
+const dataCards = [
+  {
+    title: "Light Sensor",
+    endpoint: "light"
+  },
+  {
+    title: "Humidity Sensor",
+    endpoint: "humidity"
+  },
+  {
+    title: "Water Levels",
+    endpoint: "water"
+  },
+  {
+    title: "Temperature Sensor",
+    endpoint: "temperature"
+  }
+]
 
-function Home() {
+
+function Home(props) {
+
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
-
-  const data = {
-    labels: ['January', 'February', 'March'],
-    datasets: [
-      {
-        label: 'My First dataset',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: [65, 59, 80, 81, 56, 55, 40]
-      }
-    ]
-  };
+  const [plant, setPlant] = useState(null);
 
   useEffect(() => {
-    fetch('/api/plant') 
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-      })
+    let plantId = + props.match.params.plantId;
+    getPlant(plantId);
   }, []);
+
+  function getPlant(plantId) {
+    axios.get('/api/plant/' + plantId) 
+    .then(function (response){
+      setPlant(response.data);
+      getPlantData(plantId);
+    })
+    .catch(function (error){
+      console.log(error);
+    });
+  }
+
+  function getPlantData(plantId) {
+
+  }
 
   return (
     <div className="Home">
@@ -82,16 +82,10 @@ function Home() {
           </div>
         </div>
         <div className="home-animated-tree flex-center">
-          <P5Wrapper sketch={sketch}></P5Wrapper>
-          {/* <img src={treeImage}></img> */}
-          <h2>
-            Tomato Plant
-          </h2>
-          <FontAwesomeIcon 
-            icon={faCog}
-            onClick={() => setSettingsPanelOpen(true)}
-          ></FontAwesomeIcon>
-          <div className="half-circle"></div>
+          <PlantInfo 
+            plant={plant}
+            setSettingsPanelOpen={setSettingsPanelOpen}
+          ></PlantInfo>
         </div>
         <div className="home-filtering flex-center">
           <DatePicker
@@ -106,26 +100,17 @@ function Home() {
           </DatePicker>
         </div>
         <div className="home-card-layout">
-          <div>
-            <Card className="graph-card" title="Light Sensor" style={{'position': 'relative'}}>
-              <Line data={data}/>
-            </Card>
-          </div>
-          <div>
-            <Card className="graph-card" title="Humidity Sensor" style={{'position': 'relative'}}>
-              <Line data={data}/>
-            </Card>
-          </div>
-          <div>
-            <Card className="graph-card" title="Water Levels" style={{'position': 'relative'}}>
-              <Line data={data}/>
-            </Card>
-          </div>
-          <div>
-            <Card className="graph-card" title="Temperature Sensor" style={{'position': 'relative'}}>
-              <Line data={data}/>
-            </Card>
-          </div>
+          {dataCards.map(function(dataCard) {
+            return (
+              <div>
+                <DataCard 
+                  plant={plant}
+                  title={dataCard.title} 
+                  endpoint={dataCard.endpoint}
+                ></DataCard>
+              </div>
+            );
+          })}
         </div>
       </div>
       <Modal

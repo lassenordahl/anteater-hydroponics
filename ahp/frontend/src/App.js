@@ -65,7 +65,7 @@ function App() {
     <div className='App' style={getGradient(currentLeft, currentRight)}>
       <Router history={history}>
         <Switch>
-          <Route exact path='/' component={Home}/>
+          <Route exact path='/:plantId' component={Home}/>
         </Switch>
       </Router>
     </div>

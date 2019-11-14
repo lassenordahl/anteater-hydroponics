@@ -1,0 +1,19 @@
+@import "globals/ahp-styles.scss";
+
+.DataCard {
+  flex: 1 1;
+  display: flex;
+  transition: all .2s;
+
+  .invalid-data-error{ 
+    flex: 1 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.DataCard:hover {
+  transform: scale(1.03);
+  transition: all .2s;
+}
