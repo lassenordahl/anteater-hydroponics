@@ -4,6 +4,7 @@ import './DataCard.scss';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
 import moment from 'moment';
+import ThemeContext from 'app/context/ThemeContext';
 
 import {
   Card
@@ -16,6 +17,7 @@ import {
 } from 'globals/chartjs-helper.js';
 
 
+
 function DataCard(props) {
   const [data, setData] = useState(null);
   const [average, setAverage] = useState(null);
@@ -26,6 +28,14 @@ function DataCard(props) {
       getData(props.plant, props.endpoint);
       getAverage(props.plant, props.endpoint);
     }
+
+    let interval = setInterval(function() {
+      if (props.plant !== null) {
+        getData(props.plant, props.endpoint);
+        getAverage(props.plant, props.endpoint);
+      }
+    }, 10000);
+    return () => clearInterval(interval);
   }, [props.plant]);
 
   function getData(plant, endpoint) {
@@ -85,15 +95,22 @@ function DataCard(props) {
   }
 
   return (
-    <Card className="DataCard" title={props.title} style={{'position': 'relative'}} color={props.color}>
-      { props.plant != null ?
-        <Line data={processData()} options={getChartJSOptions()}/>
-        :
-        <div className="invalid-data-error">
-          <p>Invalid plant id </p>
-        </div>
+    <ThemeContext.Consumer>
+      { value => (
+        <Card className="DataCard" title={props.title} style={{'position': 'relative'}} color={props.color}>
+          { props.plant != null ?
+            <Line data={processData()} options={getChartJSOptions(value.darkmode)}/>
+            :
+            <div className="invalid-data-error">
+              <p>Invalid plant id </p>
+            </div>
+          }
+        </Card>
+        )
       }
-    </Card>
+      
+    </ThemeContext.Consumer>
+   
   );
 }
 

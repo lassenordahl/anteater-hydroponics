@@ -18,7 +18,7 @@ export default function sketch (p) {
   let branch_droopiness = 7;
 
   let random_tomato_locations = branch_points.map(function() {
-    return Math.floor(Math.random() * (branch_length - 10)) + 20;
+    return Math.floor(Math.random() * (branch_length - 15)) + 20;
   });
 
   let angle = 0

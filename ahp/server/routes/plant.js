@@ -113,17 +113,21 @@ router.post('/:plantId', function(req, res, next) {
 });
 
 router.post('/:plantId/data', function(req, res, next) {
-  if (req.params.plantId === undefined) {
+  if (req.params.plantId === undefined
+    || req.query.humidity === undefined
+    || req.query.light === undefined
+    || req.query.water === undefined
+    || req.query.temperature === undefined) {
     res.status(500);
-    res.send('PlantId not given');
+    res.send('Proper parameters not given');
   }
 
   let values = [[
     parseInt(req.params.plantId),
-    req.body.humidity,
-    req.body.light,
-    req.body.water,
-    req.body.temperature
+    req.query.humidity,
+    req.query.light,
+    req.query.water,
+    req.query.temperature
   ]];
 
   let query = "INSERT INTO plantData (plantId, humidity, light, water, temperature) VALUES ?";

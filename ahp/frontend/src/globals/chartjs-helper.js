@@ -29,14 +29,26 @@ export function getChartJSData(dataLabels, dataDatasets) {
   };
 }
 
-export function getChartJSOptions() {
+export function getChartJSOptions(darkmode) {
   return {
     scales: {
-        yAxes: [{
+      yAxes: [{
+          ticks: {
+              beginAtZero:true,
+              fontColor: 'white'
+          },
+      }],
+      xAxes: [{
             ticks: {
-                beginAtZero: true
-            }
+                fontColor: 'white'
+            },
         }]
+    },
+    legend: {
+      position: 'bottom',
+      labels: {
+        fontColor: darkmode ? 'white' : 'black'
+      }
     }
   }
 }

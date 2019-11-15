@@ -11,37 +11,6 @@ var plantRouter = require('./routes/plant');
 
 const header = '/api';
 
-// AWS.config.getCredentials(function(err) {
-//   if (err) console.log(err.stack);
-//   // credentials not loaded
-//   else {
-//     console.log("Access key:", AWS.config.credentials.accessKeyId);
-//     console.log("Secret access key:", AWS.config.credentials.secretAccessKey);
-//   }
-// });
-// AWS.config.update({region: 'us-west-1'});
-
-// var docClient = new AWS.DynamoDB.DocumentClient();
-// var ddb = new AWS.DynamoDB();
-
-// var params = {
-//   TableName: 'plant',
-//   Item: {
-//     plantId: {
-//       N: '2'
-//     }
-//   }
-// }
-
-// ddb.putItem(params, function(err, data) {
-//   if (err) {
-//     console.log("Error", err);
-//   } else {
-//     console.log("Success", data);
-//   }
-// });
-
-
 var app = express();
 
 // view engine setup

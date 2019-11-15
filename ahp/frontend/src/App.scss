@@ -3,8 +3,6 @@
 .App {
   min-height: 100vh;
   min-width: 100vw;
-  background-color: $background;
-  color: $fontColor;
   font-family: $font;
   overflow-y: auto;
   transition: background-color 5s ease;
@@ -20,6 +18,15 @@
 
   h1, h2        { font-weight: bolder }
   h3, h4, h5, h6 {font-weight: 400}
-
-
 }
+
+.darkmode {
+  color: $white;
+  background-color: #121212;
+}
+
+.lightmode {
+  color: $fontColor;
+  background-color: $background;
+}
+
