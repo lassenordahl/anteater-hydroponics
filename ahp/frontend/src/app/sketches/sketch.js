@@ -15,7 +15,7 @@ export default function sketch (p) {
     plant_height / 2 + plant_height / 8
   ];
   let branch_length = 50; // Branches will be 20 nodes long
-  let branch_droopiness = 7;
+  let branch_droopiness = 9;
 
   let random_tomato_locations = branch_points.map(function() {
     return Math.floor(Math.random() * (branch_length - 15)) + 20;

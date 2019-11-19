@@ -23,25 +23,28 @@ function DataCard(props) {
   const [average, setAverage] = useState(null);
 
   useEffect(() => {
-    console.log('data card loaded');
     if (props.plant !== null) {
       getData(props.plant, props.endpoint);
-      getAverage(props.plant, props.endpoint);
+      // getAverage(props.plant, props.endpoint);
     }
 
     let interval = setInterval(function() {
       if (props.plant !== null) {
         getData(props.plant, props.endpoint);
-        getAverage(props.plant, props.endpoint);
+        // getAverage(props.plant, props.endpoint);
       }
     }, 10000);
     return () => clearInterval(interval);
-  }, [props.plant]);
+  }, [props.plant, props.endpoint, props.fromDate, props.toDate]);
 
   function getData(plant, endpoint) {
-    axios.get(`/api/plant/${plant.plantId}/data/${endpoint}`)
+    axios.get(`/api/plant/${plant.plantId}/data/${endpoint}`, {
+      params: {
+        fromDate: props.fromDate,
+        toDate: props.toDate
+      }
+    })
       .then(function (response) {
-        console.log(response.data);
         if (response.data.points !== undefined && response.data.timestamps !== undefined) {
           setData(response.data);
         }
@@ -54,7 +57,6 @@ function DataCard(props) {
   function getAverage(plant, endpoint) {
     axios.get(`/api/plant/${plant.plantId}/data/${endpoint}/average`)
       .then(function (response) {
-        console.log(response.data);
         setAverage(response.data.average);
       })
       .catch(function(error) {
@@ -63,7 +65,9 @@ function DataCard(props) {
   }
 
   function processData() {
-    if (props.plant === null || data === null || average == null) {
+    if (props.plant === null || data === null) {
+
+    // if (props.plant === null || data === null || average == null) {
       return {};
     }
 
@@ -74,6 +78,8 @@ function DataCard(props) {
     let return_dataset = getDataset(props.color, props.endpoint, data.points, true);
     let average_dataset = getDataset(getAverageColor(average, props.plant.thresholds[props.endpoint]), 'Average', data.points.map(() => average), false);
     let threshold_dataset = getDataset(getAverageColor(average, props.plant.thresholds[props.endpoint]), 'Threshold', data.points.map(() => props.plant.thresholds[props.endpoint]), false, [5, 5]);
+
+    return getChartJSData(labels, [return_dataset, threshold_dataset]);
 
     return getChartJSData(labels, [return_dataset, average_dataset, threshold_dataset]);
   }

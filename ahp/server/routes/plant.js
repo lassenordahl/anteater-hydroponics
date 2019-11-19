@@ -142,6 +142,7 @@ router.post('/:plantId/data', function(req, res, next) {
 });
 
 router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, next) {
+  console.log('we are getting average');
   if (req.params.plantId === undefined ||
       req.params.thresholdType === undefined) {
     res.sendStatus(400);
@@ -192,6 +193,7 @@ router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, ne
       res.sendStatus(400);
       res.end();
     } else {
+      console.log('how the fuck', data);
       if (data.length === 0) {
         res.send({
           id: parseInt(req.params.plantId),
@@ -229,19 +231,24 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
   `SELECT id, ${type}, timestamp FROM plantData\
   WHERE plantId=${id} ${dateQuery}`;
 
+  console.log("we're returning data of threshold type", query);
+
   sql.query(query, function(err, data) {
     if (err) {
       console.log(err);
       res.sendStatus(500);
     } else {
       if (data.length === 0) {
+        console.log('fuck');
         res.send({
           id: parseInt(req.params.plantId),
-          average: 0
+          points: [],
+          timestamps: [],
         });
       } else {
         let return_data = data.map(function(point) { return point[type] });
         let return_timestamps = data.map(function(point) { return point.timestamp });
+        console.log("we're returning data of threshold type")
         res.send({
           points: return_data,
           timestamps: return_timestamps

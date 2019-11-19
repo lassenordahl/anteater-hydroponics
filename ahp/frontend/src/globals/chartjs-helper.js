@@ -35,12 +35,12 @@ export function getChartJSOptions(darkmode) {
       yAxes: [{
           ticks: {
               beginAtZero:true,
-              fontColor: 'white'
+              fontColor: darkmode ? 'white' : 'black'
           },
       }],
       xAxes: [{
             ticks: {
-                fontColor: 'white'
+                fontColor: darkmode ? 'white' : 'black'
             },
         }]
     },

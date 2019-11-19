@@ -88,9 +88,9 @@
     }
 
     & > div {
-      // label {
-        // color: white;
-      // }
+      label {
+        color: $fontColor;
+      }
       @media screen and (min-width: $tabletSize) {
         margin-right: $largeSpacing;
       }
@@ -99,6 +99,15 @@
     & > div:last-child {
       @media screen and (max-width: $tabletSize) {
         margin-top: $mediumSpacing;
+      }
+    }
+  }
+
+  // Weird bug with it , I try to never 
+  .home-filtering-darkmode {
+    & > div {
+      label {
+        color: white;
       }
     }
   }

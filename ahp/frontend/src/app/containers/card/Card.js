@@ -9,7 +9,7 @@ function getIcon(title) {
     return faLightbulb; 
   } if (title === "Humidity Sensor") {
     return faCloud;
-  } if (title === "Water Levels") {
+  } if (title === "Water Levels" || title === "Milk Levels") {
     return faTint;
   } if (title === "Temperature Sensor") {
     return faThermometerEmpty;

@@ -3,7 +3,8 @@
 .DataCard {
   flex: 1 1;
   display: flex;
-  transition: all .2s;
+  transition-property: background-color, transform;
+  transition-duration: 5s, .2s;
 
   .invalid-data-error{ 
     flex: 1 1;

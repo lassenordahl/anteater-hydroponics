@@ -5,7 +5,8 @@
   min-width: 100vw;
   font-family: $font;
   overflow-y: auto;
-  transition: background-color 5s ease;
+  transition-property: background-color, color;
+  transition-duration: 5s;
   // background-image: linear-gradient(to bottom right, rgba(255, 80, 11, 0.705), #ce1a1a);
 
 
