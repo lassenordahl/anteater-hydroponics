@@ -117,8 +117,10 @@ function Home(props) {
            </div>
            <div className="home-animated-tree flex-center">
              <PlantInfo 
-               plant={plant}
-               setSettingsPanelOpen={setSettingsPanelOpen}
+                plant={plant}
+                setSettingsPanelOpen={setSettingsPanelOpen}
+                fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+                toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
              ></PlantInfo>
            </div>
            <div className={"home-filtering flex-center " + (value.darkmode ? "home-filtering-darkmode" : null)}>
@@ -136,7 +138,7 @@ function Home(props) {
              </DatePicker>
            </div>
            <div className="home-card-layout">
-             {dataCards.map(function(dataCard, index) {
+             {/* {dataCards.map(function(dataCard, index) {
                return (
                  <div key={index}>
                    <DataCard 
@@ -149,7 +151,7 @@ function Home(props) {
                    ></DataCard>
                  </div>
                );
-             })}
+             })} */}
            </div>
          </div>
          <Modal

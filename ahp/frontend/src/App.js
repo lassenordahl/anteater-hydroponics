@@ -10,14 +10,14 @@ import {
 
 function App() {
 
-  const [darkmode, setDarkmode] = useState(true);
+  const [darkmode, setDarkmode] = useState(false);
 
-  useEffect(() => {
-    let interval = setInterval(() => {
-      setDarkmode(!darkmode);
-    }, 30000);
-    return () => clearInterval(interval);
-  }, [darkmode]);
+  // useEffect(() => {
+  //   let interval = setInterval(() => {
+  //     setDarkmode(!darkmode);
+  //   }, 30000);
+  //   return () => clearInterval(interval);
+  // }, [darkmode]);
 
   return (
     // style={getGradient(currentLeft, currentRight)}
