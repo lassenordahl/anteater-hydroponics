@@ -195,10 +195,11 @@ router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, ne
     } else {
       console.log('how the fuck', data);
       if (data.length === 0) {
-        res.send({
+        var response = {
           id: parseInt(req.params.plantId),
-          average: 0
-        });
+        };
+        response[aggregateType] = 0
+        res.send(response);
       } else {
         res.send(data[0]);
       }

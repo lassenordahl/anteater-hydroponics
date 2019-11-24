@@ -92,10 +92,12 @@ function Home(props) {
     });
   }
 
-  function openDataPanel(title, endpoint) {
+  function openDataPanel(title, endpoint, plant, color) {
     setSelectedPanel({
       title: title,
-      endpoint: endpoint
+      endpoint: endpoint,
+      plant: plant,
+      color: color
     });
     setDataPanelOpen(true);
   }
@@ -159,7 +161,7 @@ function Home(props) {
                     color={dataCard.color}
                     fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
                     toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
-                    onClick={() => openDataPanel(dataCard.title, dataCard.endpoint)}
+                    onClick={() => openDataPanel(dataCard.title, dataCard.endpoint, plant, dataCard.color)}
                   ></DataCard>
                 </div>
               );
@@ -181,7 +183,11 @@ function Home(props) {
            isOpen={dataPanelOpen}
            onRequestClose={() => setDataPanelOpen(false)}   
           >
-            <ExpandedDataView/>
+            <ExpandedDataView
+              plant={selectedPanel.plant}
+              endpoint={selectedPanel.endpoint}
+              color={selectedPanel.color}
+            />
           </Modal>
           : null
         }

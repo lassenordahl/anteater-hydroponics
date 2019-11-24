@@ -9,8 +9,19 @@
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .graph { 
     grid-area: 1 / 1 / 3 / 4; 
+
+    & > div {
+      widtH: 80%;
+      position: relative;
+    }
   }
   .min { 
     grid-area: 3 / 1 / 4 / 2; 
