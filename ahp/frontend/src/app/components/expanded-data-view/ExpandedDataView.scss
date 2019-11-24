@@ -1,5 +1,24 @@
 @import "globals/ahp-styles.scss";
 
 .ExpandedDataView {
-  
+  margin: $tinySpacing;
+  height: 60vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  .graph { 
+    grid-area: 1 / 1 / 3 / 4; 
+  }
+  .min { 
+    grid-area: 3 / 1 / 4 / 2; 
+  }
+  .max { 
+    grid-area: 3 / 2 / 4 / 3; 
+  }
+  .avg { 
+    grid-area: 3 / 3 / 4 / 4; 
+  }
 }

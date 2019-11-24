@@ -12,7 +12,8 @@ import ThemeContext from 'app/context/ThemeContext';
 
 import {
   PlantInfo,
-  DataCard
+  DataCard,
+  ExpandedDataView
 } from 'app/components';
 
 const dataCards = [
@@ -180,7 +181,7 @@ function Home(props) {
            isOpen={dataPanelOpen}
            onRequestClose={() => setDataPanelOpen(false)}   
           >
-            hay baby data edition
+            <ExpandedDataView/>
           </Modal>
           : null
         }
