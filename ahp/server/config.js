@@ -1,8 +1,8 @@
 let config = {
-  host    : 'ahp-instance-1.c5zn6vlnxda7.us-east-1.rds.amazonaws.com',
+  host    : 'ahp.cbrnsjzarzyh.us-east-1.rds.amazonaws.com',
   user    : 'admin',
   password: 'beepboop123',
-  database: 'ahp',
+  database: 'test',
   port: 3306,
   ssl: true,
 };

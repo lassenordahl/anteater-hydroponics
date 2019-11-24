@@ -103,7 +103,13 @@ function DataCard(props) {
   return (
     <ThemeContext.Consumer>
       { value => (
-        <Card className="DataCard" title={props.title} style={{'position': 'relative'}} color={props.color}>
+        <Card 
+          className="DataCard" 
+          title={props.title} 
+          style={{'position': 'relative'}} 
+          color={props.color}
+          onClick={props.onClick}
+        >
           { props.plant != null ?
             <Line data={processData()} options={getChartJSOptions(value.darkmode)}/>
             :

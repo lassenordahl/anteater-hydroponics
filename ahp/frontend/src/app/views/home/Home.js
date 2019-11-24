@@ -58,6 +58,8 @@ const dataCards = [
 function Home(props) {
 
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
+  const [dataPanelOpen, setDataPanelOpen] = useState(false);
+  const [selectedPanel, setSelectedPanel] = useState(null);
   const [plant, setPlant] = useState(null);
   const [fromDate, setFromDate] = useState(moment().subtract(10, 'd').toDate());
   const [toDate, setToDate] = useState(moment().toDate());
@@ -89,79 +91,99 @@ function Home(props) {
     });
   }
 
+  function openDataPanel(title, endpoint) {
+    setSelectedPanel({
+      title: title,
+      endpoint: endpoint
+    });
+    setDataPanelOpen(true);
+  }
+
   return (
     <ThemeContext.Consumer>
       {value => (
-         <div className="Home">
-         <div className="home-particles-container">
-           {/* <Particles 
-             className="home-particles" 
-             style={{
-               'width': '100%',
-               'height': '100%'
-             }} 
-             params={particlesParams}
-           /> */}
-         </div>
-         <div className="home-layout">
-           <div className="home-header"> 
-             { !value.darkmode ? <img src={ahp_logo_dark}></img> : <img src={ahp_logo_light}></img>}
-             <div>
-               <h1>
-                 Anteater Hydroponics
-               </h1>
-               <p>
-                 IoT Project by Lasse Nordahl and Jesse Chong
-               </p>
-             </div>
-           </div>
-           <div className="home-animated-tree flex-center">
-             <PlantInfo 
-                plant={plant}
-                setSettingsPanelOpen={setSettingsPanelOpen}
-                fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
-                toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
-             ></PlantInfo>
-           </div>
-           <div className={"home-filtering flex-center " + (value.darkmode ? "home-filtering-darkmode" : null)}>
-             <DatePicker
-               label="From"
-               value={fromDate}
-               onChange={(value) => setFromDate(value)}
-             >
-             </DatePicker>
-             <DatePicker
-               label="To"
-               value={toDate}
-               onChange={(value) => setToDate(value)}
-             >
-             </DatePicker>
-           </div>
-           <div className="home-card-layout">
-             {/* {dataCards.map(function(dataCard, index) {
-               return (
-                 <div key={index}>
-                   <DataCard 
-                     plant={plant}
-                     title={dataCard.title} 
-                     endpoint={dataCard.endpoint}
-                     color={dataCard.color}
-                     fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
-                     toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
-                   ></DataCard>
-                 </div>
-               );
-             })} */}
-           </div>
-         </div>
-         <Modal
+        <div className="Home">
+        <div className="home-particles-container">
+          {/* <Particles 
+            className="home-particles" 
+            style={{
+              'width': '100%',
+              'height': '100%'
+            }} 
+            params={particlesParams}
+          /> */}
+        </div>
+        <div className="home-layout">
+          <div className="home-header"> 
+            { !value.darkmode ? <img src={ahp_logo_dark}></img> : <img src={ahp_logo_light}></img>}
+            <div>
+              <h1>
+                Anteater Hydroponics
+              </h1>
+              <p>
+                IoT Project by Lasse Nordahl and Jesse Chong
+              </p>
+            </div>
+          </div>
+          <div className="home-animated-tree flex-center">
+            <PlantInfo 
+              plant={plant}
+              setSettingsPanelOpen={setSettingsPanelOpen}
+              fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+              toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
+            ></PlantInfo>
+          </div>
+          <div className={"home-filtering flex-center " + (value.darkmode ? "home-filtering-darkmode" : null)}>
+            <DatePicker
+              label="From"
+              value={fromDate}
+              onChange={(value) => setFromDate(value)}
+            >
+            </DatePicker>
+            <DatePicker
+              label="To"
+              value={toDate}
+              onChange={(value) => setToDate(value)}
+            >
+            </DatePicker>
+          </div>
+          <div className="home-card-layout">
+            {dataCards.map(function(dataCard, index) {
+              return (
+                <div key={index}>
+                  <DataCard 
+                    plant={plant}
+                    title={dataCard.title} 
+                    endpoint={dataCard.endpoint}
+                    color={dataCard.color}
+                    fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+                    toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
+                    onClick={() => openDataPanel(dataCard.title, dataCard.endpoint)}
+                  ></DataCard>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <Modal
+          size="large"
+          title="Anteater Hydroponics Settings"
+          isOpen={settingsPanelOpen}
+          onRequestClose={() => setSettingsPanelOpen(false)}   
+        >
+          hay baby
+        </Modal>
+        { selectedPanel !== null ?
+          <Modal
            size="large"
-           title="Anteater Hydroponics Settings"
-           isOpen={settingsPanelOpen}
-           onRequestClose={() => setSettingsPanelOpen(false)}   
-         >
-             hay baby
-         </Modal>
+           title={selectedPanel.title + ' Detailed View'}
+           isOpen={dataPanelOpen}
+           onRequestClose={() => setDataPanelOpen(false)}   
+          >
+            hay baby data edition
+          </Modal>
+          : null
+        }
        </div>
       )}
     </ThemeContext.Consumer>

@@ -24,6 +24,7 @@ function Card(props) {
         <div 
           className={props.className + " Card box-shadow " + (value.darkmode ? "card-darkmode" : null)} 
           style={props.style}
+          onClick={props.onClick}
         >
           <div>
             <div className="card-header">
