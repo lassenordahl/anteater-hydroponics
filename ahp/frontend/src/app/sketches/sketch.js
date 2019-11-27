@@ -12,7 +12,7 @@ export default function wrapper_sketch(health) {
     step_health = 4
   } else if (health >= 50) {
     step_health = 3;
-  } else if (health >= 25) {
+  } else if (health > 25) {
     step_health = 2;
   } else {
     step_health = 1;
@@ -20,11 +20,16 @@ export default function wrapper_sketch(health) {
 
   function healthFilterBranches(branch_points) {
     // Shuffle array
+    console.log(step_health, branch_points.map((num) => {
+      return Math.floor(num)
+    }).sort(() => {
+      return 0.5 - Math.random()
+    }));
     return branch_points.map((num) => {
       return Math.floor(num)
     }).sort(() => {
       return 0.5 - Math.random()
-    }).slice(0, step_health - 1);
+    }).slice(-1 * step_health);
   }
   
   return function sketch (p) {
@@ -39,15 +44,15 @@ export default function wrapper_sketch(health) {
 
     // Filter out branches if health isn't great
     let branch_points = healthFilterBranches([
-      plant_height / 4,
-      plant_height / 4 + plant_height / 8,
-      plant_height / 2,
-      plant_height / 2 + plant_height / 8
+      plant_height / 4 + 50,
+      plant_height / 4 + plant_height / 8 + 50,
+      plant_height / 2 + 50,
+      plant_height / 2 + plant_height / 8 + 50
     ]);
     console.log(branch_points);
 
     let branch_length = 50; // Branches will be 20 nodes long
-    let branch_droopiness = 9;
+    let branch_droopiness = 3 + Math.floor((health / 100) * 8);
 
     let random_tomato_locations = branch_points.map(function() {
       return Math.floor(Math.random() * (branch_length - 15)) + 20;

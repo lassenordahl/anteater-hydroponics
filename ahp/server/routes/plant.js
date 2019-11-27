@@ -75,6 +75,7 @@ router.get('/:plantId', function(req, res, next) {
 });
 
 router.post('/:plantId', function(req, res, next) {
+  console.log('trying to post plant', req.body);
   if (req.params.plantId === undefined) {
     res.sendStatus(400);
     return;
@@ -96,10 +97,11 @@ router.post('/:plantId', function(req, res, next) {
         'water': req.body.weights.water,
         'light': req.body.weights.light,
         'temperature': req.body.weights.temperature
-      },
-      'dateCreated': new Date().toISOString()
+      }
     }
   }
+
+  console.log(params);
 
   ddb.put(params, function(err, data) {
     if (err) {

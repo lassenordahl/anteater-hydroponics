@@ -3,8 +3,8 @@ import './PlantInfo.scss';
 
 import P5Wrapper from 'react-p5-wrapper';
 import sketch from 'app/sketches/sketch.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 import ThemeContext from 'app/context/ThemeContext';
 import axios from 'axios';
 
@@ -148,11 +148,20 @@ function PlantInfo(props) {
               </h2>
             </React.Fragment>
           }
-          <FontAwesomeIcon 
-            icon={faCog}
-            onClick={() => openPanel()}
-            className="settings-button"
-          ></FontAwesomeIcon>
+          <div className="plant-info-icons">
+            <FontAwesomeIcon 
+              icon={faCog}
+              onClick={() => openPanel()}
+              className="settings-button"
+            />
+            <div/>
+            <FontAwesomeIcon 
+              icon={faHeartbeat}
+              onClick={() => openPanel()}
+              className="settings-button"
+            />
+          </div>
+          
           
           <div className={"half-circle " + (value.darkmode ? "half-circle-darkmode" : null)}></div>
         </React.Fragment>

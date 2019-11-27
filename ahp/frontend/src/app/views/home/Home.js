@@ -16,6 +16,10 @@ import {
   ExpandedDataView
 } from 'app/components';
 
+import {
+  SettingsView
+} from 'app/views';
+
 const dataCards = [
   {
     title: "Light Sensor",
@@ -107,14 +111,14 @@ function Home(props) {
       {value => (
         <div className="Home">
         <div className="home-particles-container">
-          <Particles 
+          {/* <Particles 
             className="home-particles" 
             style={{
               'width': '100%',
               'height': '100%'
             }} 
             params={particlesParams}
-          />
+          /> */}
         </div>
         <div className="home-layout">
           <div className="home-header"> 
@@ -168,14 +172,19 @@ function Home(props) {
             })}
           </div>
         </div>
-        <Modal
-          size="large"
-          title="Anteater Hydroponics Settings"
-          isOpen={settingsPanelOpen}
-          onRequestClose={() => setSettingsPanelOpen(false)}   
-        >
-          hay baby
-        </Modal>
+        { plant !== null ? 
+          <Modal
+            size="large"
+            title="Anteater Hydroponics Settings"
+            isOpen={settingsPanelOpen}
+            onRequestClose={() => setSettingsPanelOpen(false)}  
+            style={{'maxHeight': '84vh'}} 
+          >
+            <SettingsView plant={plant}/>
+          </Modal>
+          : null
+        }
+        
         { selectedPanel !== null ?
           <Modal
            size="large"

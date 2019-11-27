@@ -1,0 +1,39 @@
+@import "globals/ahp-styles.scss";
+
+.SettingsView {
+  margin: $tinySpacing;
+
+  // For some reason the app.js font stuff doesn't apply in these dialogs?
+  // Importing here, will likely fix later instead of repeating css
+  font-family: $font;
+
+  h1              { font-size: 2.5em; margin: .67em 0; font-weight: bold }
+  h2              { font-size: 2em; margin: .75em 0;}
+  h3              { font-size: 1.5em; margin: .83em 0 }
+  h4              { font-size: 1em; margin: 1em }
+  h5              { font-size: .83em; margin: 1.5em 0 }
+  h6              { font-size: .75em; margin: 1.67em 0 }
+
+  h2:first-child {
+    margin-top: 0;
+  }
+
+  .group-four-inputs {
+    display: grid;
+    width: calc(100% - 24px);
+    grid-template-columns: 50% 50%;
+    grid-gap: $smallSpacing;
+  }
+
+  .dialog-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: $smallSpacing;
+
+    button {
+      margin-left: $smallSpacing;
+    }
+  }
+}

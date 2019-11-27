@@ -25,3 +25,12 @@
   border-top: 0 !important;
   border: 3px solid $white;
 }
+
+.plant-info-icons {
+  display: flex;
+  flex-direction: row;
+  
+  & > div {
+    width: 24px;
+  }
+}
