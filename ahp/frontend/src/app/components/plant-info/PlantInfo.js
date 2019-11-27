@@ -8,6 +8,13 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import ThemeContext from 'app/context/ThemeContext';
 import axios from 'axios';
 
+import {
+  getLightHealth,
+  getTemperatureHealth,
+  getHumidityHealth,
+  getWaterHealth
+} from 'globals/ranges';
+
 
 function PlantInfo(props) {
 
@@ -19,17 +26,22 @@ function PlantInfo(props) {
 
   useEffect(() => {
     if (props.plant != null) {
-      getAverage(props.plant.plantId, tempAverage, setTempAverage)
-      getAverage(props.plant.plantId, humidityAverage, setHumidityAverage)
-      getAverage(props.plant.plantId, lightAverage, setLightAverage)
-      getAverage(props.plant.plantId, waterAverage, setWaterAverage)
+      getAverage(props.plant.plantId, 'temperature', setTempAverage)
+      getAverage(props.plant.plantId, 'humidity', setHumidityAverage)
+      getAverage(props.plant.plantId, 'light', setLightAverage)
+      getAverage(props.plant.plantId, 'water', setWaterAverage)
     }
-   }, [props.plant, tempAverage, humidityAverage, lightAverage, waterAverage])
+   }, [props.plant])
+
+  useEffect(() => {
+    // If we have all of them
+    if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
+      calculateHealth();
+    }
+  }, [tempAverage, humidityAverage, lightAverage, waterAverage])
 
   function openPanel() {
-    alert('clicked?');
     if (props.plant !== null) {
-      alert('open');
       props.setSettingsPanelOpen(true)
     } else {
       // Toast
@@ -52,7 +64,6 @@ function PlantInfo(props) {
         </p>
       )
     } else if (plantHealth > 50) {
-      
       return ( 
         <p>
           Your plant health is 
@@ -80,10 +91,6 @@ function PlantInfo(props) {
     axios.get(`/api/plant/${plantId}/data/${endpoint}/average`)
       .then(function (response) {
         setFunction(response.data.average);
-        // If we have all of them
-        if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
-          calculateHealth();
-        }
       })
       .catch(function(error) {
         console.log(error);
@@ -91,22 +98,45 @@ function PlantInfo(props) {
   }
 
   function calculateHealth() {
-    
+    let possiblePoints = Object.keys(props.plant.weights).map(function(key) {
+      return props.plant.weights[key]
+    }).reduce(function(a, b) {
+      return a + b;
+    }) * 4;
+
+    let currentPoints = Object.keys(props.plant.weights).map(function(key) {
+      if (key === 'water') {
+        return getWaterHealth(waterAverage) * props.plant.weights[key];
+      } else if (key === 'temperature') {
+        return getTemperatureHealth(tempAverage) * props.plant.weights[key];
+      } else if (key === 'humidity') {
+        return getHumidityHealth(humidityAverage) * props.plant.weights[key];
+      } else if (key === 'light') {
+        return getLightHealth(lightAverage) * props.plant.weights[key];
+      }
+      return props.plant.weights[key]
+    }).reduce(function(a, b) {
+      return a + b;
+    });
+
+    setPlantHealth((currentPoints / possiblePoints) * 100);
+  }
+
+  function capitalize(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1)
   }
 
   return (
     <ThemeContext.Consumer>
       {value => (
         <React.Fragment>
-          { props.plant != null ?
+          { props.plant != null && plantHealth !== null ?
             <React.Fragment>
-              {/* <P5Wrapper sketch={sketch}></P5Wrapper> */}
+              <P5Wrapper sketch={sketch(plantHealth)}></P5Wrapper>
               <h2>
-                {props.plant.plantType} Plant
+                {capitalize(props.plant.plantType)} Plant
               </h2>
-              <p>
-                {getPlantHealthString(plantHealth)}
-              </p>
+              {getPlantHealthString(plantHealth)}
             </React.Fragment>
             : 
             <React.Fragment>
@@ -121,7 +151,9 @@ function PlantInfo(props) {
           <FontAwesomeIcon 
             icon={faCog}
             onClick={() => openPanel()}
+            className="settings-button"
           ></FontAwesomeIcon>
+          
           <div className={"half-circle " + (value.darkmode ? "half-circle-darkmode" : null)}></div>
         </React.Fragment>
       )}

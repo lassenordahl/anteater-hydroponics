@@ -36,12 +36,12 @@ const dataCards = [
     }
   },
   {
-    title: "Milk Levels",
+    title: "Water Levels",
     endpoint: "water",
     color: {
-      r: 255,
-      g: 255,
-      b: 255
+      r: 77,
+      g: 120,
+      b: 240
     }
   },
   {
@@ -107,14 +107,14 @@ function Home(props) {
       {value => (
         <div className="Home">
         <div className="home-particles-container">
-          {/* <Particles 
+          <Particles 
             className="home-particles" 
             style={{
               'width': '100%',
               'height': '100%'
             }} 
             params={particlesParams}
-          /> */}
+          />
         </div>
         <div className="home-layout">
           <div className="home-header"> 

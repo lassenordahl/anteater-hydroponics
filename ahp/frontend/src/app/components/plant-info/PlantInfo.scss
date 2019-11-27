@@ -1,11 +1,16 @@
 @import "globals/ahp-styles.scss";
 
+.settings-button:hover {
+  color: $lightGray !important;
+}
+
 .no-sketch-plant {
   height: 400px;
   width: 200px;
 }
 
 .half-circle {
+  z-index: -100;
   width: 260px;
   height: 130px;
   border: 3px solid $fontColor;

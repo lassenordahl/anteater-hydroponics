@@ -25,13 +25,13 @@ function DataCard(props) {
   useEffect(() => {
     if (props.plant !== null) {
       getData(props.plant, props.endpoint);
-      // getAverage(props.plant, props.endpoint);
+      getAverage(props.plant, props.endpoint);
     }
 
     let interval = setInterval(function() {
       if (props.plant !== null) {
         getData(props.plant, props.endpoint);
-        // getAverage(props.plant, props.endpoint);
+        getAverage(props.plant, props.endpoint);
       }
     }, 10000);
     return () => clearInterval(interval);
@@ -65,9 +65,9 @@ function DataCard(props) {
   }
 
   function processData() {
-    if (props.plant === null || data === null) {
+    // if (props.plant === null || data === null) {
 
-    // if (props.plant === null || data === null || average == null) {
+    if (props.plant === null || data === null || average == null) {
       return {};
     }
 
@@ -79,7 +79,7 @@ function DataCard(props) {
     let average_dataset = getDataset(getAverageColor(average, props.plant.thresholds[props.endpoint]), 'Average', data.points.map(() => average), false);
     let threshold_dataset = getDataset(getAverageColor(average, props.plant.thresholds[props.endpoint]), 'Threshold', data.points.map(() => props.plant.thresholds[props.endpoint]), false, [5, 5]);
 
-    return getChartJSData(labels, [return_dataset, threshold_dataset]);
+    // return getChartJSData(labels, [return_dataset, threshold_dataset]);
 
     return getChartJSData(labels, [return_dataset, average_dataset, threshold_dataset]);
   }

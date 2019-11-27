@@ -27,7 +27,8 @@ router.get('/', function(req, res, next) {
     AttributesToGet: [
       'plantId',
       'plantType',
-      'thresholds'
+      'thresholds',
+      'weights'
     ]
   }
 
@@ -57,7 +58,8 @@ router.get('/:plantId', function(req, res, next) {
     AttributesToGet: [
       'plantId',
       'plantType',
-      'thresholds'
+      'thresholds',
+      'weights'
     ]
   }
 
@@ -74,8 +76,7 @@ router.get('/:plantId', function(req, res, next) {
 
 router.post('/:plantId', function(req, res, next) {
   if (req.params.plantId === undefined) {
-    res.status(400);
-    res.send('PlantId not given');
+    res.sendStatus(400);
     return;
   }
 
@@ -90,13 +91,12 @@ router.post('/:plantId', function(req, res, next) {
         'light': req.body.thresholds.light,
         'temperature': req.body.thresholds.temperature
       },
-      'averages': {
-        'humidity': 0,
-        'water': 0,
-        'light': 0,
-        'temperature': 0
+      'weights': {
+        'humidity': req.body.weights.humidity,
+        'water': req.body.weights.water,
+        'light': req.body.weights.light,
+        'temperature': req.body.weights.temperature
       },
-      'dataPoints': 0,
       'dateCreated': new Date().toISOString()
     }
   }
@@ -107,7 +107,7 @@ router.post('/:plantId', function(req, res, next) {
       res.sendStatus(400);
       res.send('Unable to post plant');
     } else {
-      res.send(parseInt(req.params.plantId));
+      res.sendStatus(200);
     }
   })
 });
@@ -142,7 +142,6 @@ router.post('/:plantId/data', function(req, res, next) {
 });
 
 router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, next) {
-  console.log('we are getting average');
   if (req.params.plantId === undefined ||
       req.params.thresholdType === undefined) {
     res.sendStatus(400);
@@ -185,15 +184,12 @@ router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, ne
   `SELECT plantId, ${queryAggregation}(${type}) as ${aggregateType} FROM plantData\
   WHERE plantId=${id} ${dateQuery} GROUP BY plantId`;
 
-  console.log(query);
-
   sql.query(query, function(err, data) {
     if (err) {
       console.log(err);
       res.sendStatus(400);
       res.end();
     } else {
-      console.log('how the fuck', data);
       if (data.length === 0) {
         var response = {
           id: parseInt(req.params.plantId),
@@ -232,15 +228,12 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
   `SELECT id, ${type}, timestamp FROM plantData\
   WHERE plantId=${id} ${dateQuery}`;
 
-  console.log("we're returning data of threshold type", query);
-
   sql.query(query, function(err, data) {
     if (err) {
       console.log(err);
       res.sendStatus(500);
     } else {
       if (data.length === 0) {
-        console.log('fuck');
         res.send({
           id: parseInt(req.params.plantId),
           points: [],
@@ -249,7 +242,6 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
       } else {
         let return_data = data.map(function(point) { return point[type] });
         let return_timestamps = data.map(function(point) { return point.timestamp });
-        console.log("we're returning data of threshold type")
         res.send({
           points: return_data,
           timestamps: return_timestamps
