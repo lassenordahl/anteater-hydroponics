@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faHeartbeat } from '@fortawesome/free-solid-svg-icons';
 import ThemeContext from 'app/context/ThemeContext';
 import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 
 import {
   getLightHealth,
@@ -17,6 +18,8 @@ import {
 
 
 function PlantInfo(props) {
+
+  const { addToast } = useToasts();
 
   const [tempAverage, setTempAverage] = useState(null);
   const [humidityAverage, setHumidityAverage] = useState(null);
@@ -44,7 +47,7 @@ function PlantInfo(props) {
     if (props.plant !== null) {
       props.setSettingsPanelOpen(true)
     } else {
-      // Toast
+      addToast('Invalid plant ID. Cannot open settings.', { appearance: 'error' });
     }
   }
 

@@ -9,6 +9,7 @@ import particlesParams from 'globals/particles-config.js';
 import ahp_logo_dark from './../../assets/ahp_logo.png';
 import ahp_logo_light from './../../assets/ahp_logo_light.png';
 import ThemeContext from 'app/context/ThemeContext';
+import { useToasts } from 'react-toast-notifications';
 
 import {
   PlantInfo,
@@ -62,6 +63,8 @@ const dataCards = [
 
 function Home(props) {
 
+  const { addToast } = useToasts();
+
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
   const [dataPanelOpen, setDataPanelOpen] = useState(false);
   const [selectedPanel, setSelectedPanel] = useState(null);
@@ -93,6 +96,7 @@ function Home(props) {
     })
     .catch(function (error){
       console.log(error);
+      addToast('Unable to pull plant info', { appearance: 'error' })
     });
   }
 

@@ -4,6 +4,7 @@ import './SettingsView.scss';
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useToasts } from 'react-toast-notifications';
 
 import { Button, Input } from 'react-rainbow-components';
 
@@ -11,6 +12,7 @@ function SettingsView(props) {
 
   var newPlant = props.plant
   const [plant, setPlant] = useState(newPlant);
+  const { addToast } = useToasts();
 
   function updatePlant(type, value, key = "") {
     let updatedPlant = plant;
@@ -36,9 +38,10 @@ function SettingsView(props) {
     )
       .then(function(response) {
         console.log(response);
+        addToast('Saved Successfully', { appearance: 'success' });
       })
       .catch(function(error) {
-        console.log(error);
+        addToast('Unable to update plant', { appearance: 'error' });
       });
   }
 

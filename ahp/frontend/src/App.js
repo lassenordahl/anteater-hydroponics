@@ -4,6 +4,8 @@ import history from './history';
 import './App.scss';
 import ThemeContext from 'app/context/ThemeContext';
 
+import { ToastProvider, useToasts } from 'react-toast-notifications'
+
 import {
   Home
 } from 'app/views';
@@ -22,13 +24,18 @@ function App() {
   return (
     // style={getGradient(currentLeft, currentRight)}
     <div className={'App ' + (darkmode ? 'darkmode' : 'lightmode')} >
-      <ThemeContext.Provider value={{darkmode: darkmode}}>
-        <Router history={history}>
-          <Switch>
-            <Route exact path='/:plantId' component={Home}/>
-          </Switch>
-        </Router>
-      </ThemeContext.Provider>
+      <ToastProvider
+        autoDismiss
+        autoDismissTimeout={5000}
+      >
+        <ThemeContext.Provider value={{darkmode: darkmode}}>
+          <Router history={history}>
+            <Switch>
+              <Route exact path='/:plantId' component={Home}/>
+            </Switch>
+          </Router>
+        </ThemeContext.Provider>
+      </ToastProvider>
     </div>
   );
 }
