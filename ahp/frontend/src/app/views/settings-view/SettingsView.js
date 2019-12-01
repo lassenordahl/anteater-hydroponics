@@ -3,7 +3,7 @@ import './SettingsView.scss';
 
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes, faSortNumericDown, faLeaf, faFlag } from '@fortawesome/free-solid-svg-icons';
 import { useToasts } from 'react-toast-notifications';
 
 import { Button, Input } from 'react-rainbow-components';
@@ -48,7 +48,8 @@ function SettingsView(props) {
   return (
     <div className="SettingsView">
       <h2>
-        Plant Settings
+        <FontAwesomeIcon icon={faLeaf}/>
+        &nbsp; Plant Settings
       </h2>
         <Input
           label="Plant Type"
@@ -57,7 +58,8 @@ function SettingsView(props) {
           onChange={(e) => updatePlant('type', e.target.value)}
         />
       <h2>
-        Threshold Settings
+        <FontAwesomeIcon icon={faFlag}/>
+        &nbsp; Threshold Settings
       </h2>
       <div className="group-four-inputs">
         { Object.keys(plant.thresholds).map(function(key) {
@@ -72,7 +74,8 @@ function SettingsView(props) {
         })}
       </div>
       <h2>
-        Weights Settings
+        <FontAwesomeIcon icon={faSortNumericDown}/>
+        &nbsp; Weights Settings
       </h2>
       <div className="group-four-inputs">
         { Object.keys(plant.weights).map(function(key) {
@@ -92,14 +95,15 @@ function SettingsView(props) {
           onClick={() => postPlant(plant)}
         >
           <FontAwesomeIcon icon={faSave}/>
-
           &nbsp; Save
         </Button>
-        {/* <Button
+        <Button
           variant="destructive"
+          onClick={() => props.onRequestClose()}
         >
-          Close
-        </Button> */}
+          <FontAwesomeIcon icon={faTimes}/>
+          &nbsp; Close
+        </Button>
       </div>
     </div>
   );

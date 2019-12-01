@@ -18,7 +18,8 @@ import {
 } from 'app/components';
 
 import {
-  SettingsView
+  SettingsView,
+  HealthView
 } from 'app/views';
 
 const dataCards = [
@@ -66,6 +67,7 @@ function Home(props) {
   const { addToast } = useToasts();
 
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
+  const [healthPanelOpen, setHealthPanelOpen] = useState(false);
   const [dataPanelOpen, setDataPanelOpen] = useState(false);
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [plant, setPlant] = useState(null);
@@ -110,19 +112,24 @@ function Home(props) {
     setDataPanelOpen(true);
   }
 
+  function closeSettingsPanel() {
+    setSettingsPanelOpen(false);
+    getPlant(props.match.params.plantId);
+  }
+
   return (
     <ThemeContext.Consumer>
       {value => (
         <div className="Home">
         <div className="home-particles-container">
-          {/* <Particles 
+          <Particles 
             className="home-particles" 
             style={{
               'width': '100%',
               'height': '100%'
             }} 
             params={particlesParams}
-          /> */}
+          />
         </div>
         <div className="home-layout">
           <div className="home-header"> 
@@ -140,6 +147,7 @@ function Home(props) {
             <PlantInfo 
               plant={plant}
               setSettingsPanelOpen={setSettingsPanelOpen}
+              setHealthPanelOpen={setHealthPanelOpen}
               fromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
               toDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
             ></PlantInfo>
@@ -181,20 +189,44 @@ function Home(props) {
             size="large"
             title="Anteater Hydroponics Settings"
             isOpen={settingsPanelOpen}
-            onRequestClose={() => setSettingsPanelOpen(false)}  
-            style={{'maxHeight': '84vh'}} 
+            onRequestClose={closeSettingsPanel}  
+            style={{'maxHeight': '85vh'}} 
+            className={"dialog " + (value.darkmode ? "dialog-darkmode": null)}
           >
-            <SettingsView plant={plant}/>
+            <SettingsView 
+              plant={plant} 
+              darkmode={value.darkmode} 
+              onRequestClose={closeSettingsPanel}/>
           </Modal>
           : null
         }
-        
+        { plant !== null ? 
+          <Modal
+            size="large"
+            title="Plant Health Settings"
+            isOpen={healthPanelOpen}
+            onRequestClose={() => setHealthPanelOpen(false)}  
+            style={{'maxHeight': '85vh'}} 
+            className={"dialog " + (value.darkmode ? "dialog-darkmode": null)}
+          >
+            <HealthView 
+              plant={plant} 
+              onRequestClose={() => setHealthPanelOpen(false)}
+              currentFromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+              currentToDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
+              prevFromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+              prevToDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+            />
+          </Modal>
+          : null
+        }
         { selectedPanel !== null ?
           <Modal
            size="large"
            title={selectedPanel.title + ' Detailed View'}
            isOpen={dataPanelOpen}
-           onRequestClose={() => setDataPanelOpen(false)}   
+           onRequestClose={() => setDataPanelOpen(false)}  
+           className={"dialog " + (value.darkmode ? "dialog-darkmode": null)} 
           >
             <ExpandedDataView
               plant={selectedPanel.plant}

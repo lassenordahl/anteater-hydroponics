@@ -74,15 +74,6 @@ export default function wrapper_sketch(health) {
       return [false, false]; // Will shortcircuit so the second value is useless
     }
 
-    function drawLeaf(x, y, reflect) { // draw a leaf as follows
-      p.beginShape();
-      p.vertex(x, y);
-      p.vertex(x + (50 * (reflect ? -1 : 1)), y + 50);
-      p.vertex(x, y + 50);
-      // p.vertex(x + 50, y);
-      p.endShape()
-    }
-
     function branchFunction(index) {
       return branch_droopiness * Math.log(index);
     }
@@ -97,10 +88,55 @@ export default function wrapper_sketch(health) {
       p.fill('#ff6347');
       p.ellipse(
         w_a - (branch_to_left ? random_tomato_locations[tomato_index] : random_tomato_locations[tomato_index] * -1), 
-        height + node_size * (3 /2) - branchFunction(random_tomato_locations[tomato_index]), 
+        height + node_size * (3 /2) - branchFunction(random_tomato_locations[tomato_index]) + 4, 
         node_size * 3, 
         node_size * 3
       );
+
+      for (let i = 0; i < branch_length; i++) {
+        if (i > (3 * (branch_length / 4)) && i % 20 == 0) {
+          drawLeaf(
+            w_a - (branch_to_left ? i : i * -1), 
+            height - branchFunction(i),
+            p.PI
+          );
+        }
+      }
+      // drawLeaf(
+      //   w_a - (branch_to_left ? random_tomato_locations[tomato_index] : random_tomato_locations[tomato_index] * -1),
+      //   height + node_size * (3 /2) - branchFunction(random_tomato_locations[tomato_index])
+      // );
+    }
+
+    function drawLeaf(x, y, rotation) {
+      p.fill('#228B22');
+      p.strokeWeight(0);
+      // p.scale(2);
+      // p.translate(x, y);
+      // p.rotate(rotation);
+      //leaf shape
+      p.beginShape();
+      p.vertex(0, 0);
+      p.vertex(7, -3);
+      p.vertex(13, -2);
+      p.vertex(16, 3);
+      p.vertex(20, 20);
+      p.vertex(3, 16);
+      p.vertex(-2, 13);
+      p.vertex(-3, 7);
+      // p.vertex(x + 0, y + 0);
+      // p.vertex(x + 7, y + -3);
+      // p.vertex(x + 13, y + -2);
+      // p.vertex(x + 16, y + 3);
+      // p.vertex(x + 20, y + 20);
+      // p.vertex(x + 3, y + 16);
+      // p.vertex(x + -2, y + 13);
+      // p.vertex(x + -3, y + 7);
+      p.endShape();
+      p.fill('#52bf61');
+      // p.scale(.5);
+      // p.translate(-1 * x, -1 * y);
+      // p.rotate(-1 * rotation);
     }
 
     p.draw = function () {
@@ -134,6 +170,15 @@ export default function wrapper_sketch(health) {
             drawBranch(w_a - 100, 250 - i, false, tomato_index);
           }
         }
+
+        // if (i > 100) {
+        //   if ((i + 25) % 50 === 0) {
+        //     drawLeaf(w_a - 100, 250 - i, p.PI);
+        //   }
+        //   if ((i + 25) % 25 === 0) {
+        //     drawLeaf(w_a - 100, 250 - i, p.PI);
+        //   }
+        // }
 
         // Increment the offsets
         offset_a += .05;

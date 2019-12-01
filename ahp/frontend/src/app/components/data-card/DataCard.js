@@ -16,8 +16,6 @@ import {
   getChartJSOptions
 } from 'globals/chartjs-helper.js';
 
-
-
 function DataCard(props) {
   const [data, setData] = useState(null);
   const [average, setAverage] = useState(null);
@@ -55,7 +53,12 @@ function DataCard(props) {
   }
 
   function getAverage(plant, endpoint) {
-    axios.get(`/api/plant/${plant.plantId}/data/${endpoint}/average`)
+    axios.get(`/api/plant/${plant.plantId}/data/${endpoint}/average`, {
+      params: {
+        fromDate: props.fromDate,
+        toDate: props.toDate
+      }
+    })
       .then(function (response) {
         setAverage(response.data.average);
       })
