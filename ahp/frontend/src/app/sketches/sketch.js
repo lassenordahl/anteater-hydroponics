@@ -20,15 +20,8 @@ export default function wrapper_sketch(health) {
 
   function healthFilterBranches(branch_points) {
     // Shuffle array
-    console.log(step_health, branch_points.map((num) => {
-      return Math.floor(num)
-    }).sort(() => {
-      return 0.5 - Math.random()
-    }));
     return branch_points.map((num) => {
       return Math.floor(num)
-    }).sort(() => {
-      return 0.5 - Math.random()
     }).slice(-1 * step_health);
   }
   
@@ -88,18 +81,21 @@ export default function wrapper_sketch(health) {
       p.fill('#ff6347');
       p.ellipse(
         w_a - (branch_to_left ? random_tomato_locations[tomato_index] : random_tomato_locations[tomato_index] * -1), 
-        height + node_size * (3 /2) - branchFunction(random_tomato_locations[tomato_index]) + 4, 
+        height + node_size * (3 /2) - branchFunction(random_tomato_locations[tomato_index]) + 7, 
         node_size * 3, 
         node_size * 3
       );
+      
+      let count = 0;
 
       for (let i = 0; i < branch_length; i++) {
-        if (i > (3 * (branch_length / 4)) && i % 20 == 0) {
+        if (i > (2.7 * (branch_length / 4)) && i % 8 == 0) {
           drawLeaf(
             w_a - (branch_to_left ? i : i * -1), 
             height - branchFunction(i),
-            p.PI
+            (branch_to_left ? (count > 0 ? 80 : 40): (count > 0 ? 10 : 40))
           );
+          count++;
         }
       }
       // drawLeaf(
@@ -109,12 +105,15 @@ export default function wrapper_sketch(health) {
     }
 
     function drawLeaf(x, y, rotation) {
+      p.angleMode(p.DEGREES);
       p.fill('#228B22');
-      p.strokeWeight(0);
-      // p.scale(2);
+
       // p.translate(x, y);
-      // p.rotate(rotation);
       //leaf shape
+      p.translate(x, y);
+      p.rotate(rotation);
+      p.scale(1.5);
+
       p.beginShape();
       p.vertex(0, 0);
       p.vertex(7, -3);
@@ -133,13 +132,18 @@ export default function wrapper_sketch(health) {
       // p.vertex(x + -2, y + 13);
       // p.vertex(x + -3, y + 7);
       p.endShape();
+      p.scale(1 / (1.5));
+      p.rotate(-1 * rotation);
+      p.translate(-1 * x, -1 * y);
+
+      p.strokeWeight(0);
       p.fill('#52bf61');
-      // p.scale(.5);
       // p.translate(-1 * x, -1 * y);
       // p.rotate(-1 * rotation);
     }
 
     p.draw = function () {
+       
       // if (p.frameCount % 60 !== 0) {
       //   return;
       // }
@@ -155,6 +159,7 @@ export default function wrapper_sketch(health) {
 
       for (let i = 50; i < plant_height; i += 1) {
         p.fill('#52bf61');
+        p.angleMode(p.RADIANS);
 
         // Draw the main ellipse
         let w_a = width / 2 + -1 * p.sin(9/10 * (-1 * angle + offset_a)) * amplitude * (i / 1800);
