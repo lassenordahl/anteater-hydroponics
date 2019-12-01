@@ -12,7 +12,7 @@ import {
 
 function App() {
 
-  const [darkmode, setDarkmode] = useState(true);
+  const [darkmode, setDarkmode] = useState(false);
 
   // useEffect(() => {
   //   let interval = setInterval(() => {

@@ -108,12 +108,9 @@ export default function wrapper_sketch(health) {
       p.angleMode(p.DEGREES);
       p.fill('#228B22');
 
-      // p.translate(x, y);
-      //leaf shape
       p.translate(x, y);
       p.rotate(rotation);
       p.scale(1.5);
-
       p.beginShape();
       p.vertex(0, 0);
       p.vertex(7, -3);
@@ -123,23 +120,12 @@ export default function wrapper_sketch(health) {
       p.vertex(3, 16);
       p.vertex(-2, 13);
       p.vertex(-3, 7);
-      // p.vertex(x + 0, y + 0);
-      // p.vertex(x + 7, y + -3);
-      // p.vertex(x + 13, y + -2);
-      // p.vertex(x + 16, y + 3);
-      // p.vertex(x + 20, y + 20);
-      // p.vertex(x + 3, y + 16);
-      // p.vertex(x + -2, y + 13);
-      // p.vertex(x + -3, y + 7);
       p.endShape();
       p.scale(1 / (1.5));
       p.rotate(-1 * rotation);
       p.translate(-1 * x, -1 * y);
-
       p.strokeWeight(0);
       p.fill('#52bf61');
-      // p.translate(-1 * x, -1 * y);
-      // p.rotate(-1 * rotation);
     }
 
     p.draw = function () {
@@ -176,19 +162,16 @@ export default function wrapper_sketch(health) {
           }
         }
 
-        // if (i > 100) {
-        //   if ((i + 25) % 50 === 0) {
-        //     drawLeaf(w_a - 100, 250 - i, p.PI);
-        //   }
-        //   if ((i + 25) % 25 === 0) {
-        //     drawLeaf(w_a - 100, 250 - i, p.PI);
-        //   }
-        // }
-
         // Increment the offsets
         offset_a += .05;
         offset_b += .4;
       }
+
+      // Draw the soil
+      p.fill('#543200');
+      p.ellipse(0, 200, 50, 50);
+      p.ellipse(-25, 200, 30, 30);
+      p.ellipse(25, 200, 30, 30);
 
       angle += .03;
     } 
