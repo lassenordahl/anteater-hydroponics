@@ -16,7 +16,6 @@ function SettingsView(props) {
 
   function updatePlant(type, value, key = "") {
     let updatedPlant = plant;
-    console.log(plant.plantType, value, key);
     if (type === "type") {
       plant.plantType = value;
     } else if (type === "threshold") {
@@ -24,7 +23,6 @@ function SettingsView(props) {
     } else if (type === "weights") {
       plant.weights[key] = value;
     }
-    console.log(plant.plantType);
     setPlant({...plant, updatedPlant});
   }
 
@@ -37,7 +35,6 @@ function SettingsView(props) {
       plant
     )
       .then(function(response) {
-        console.log(response);
         addToast('Saved Successfully', { appearance: 'success' });
       })
       .catch(function(error) {
@@ -62,11 +59,12 @@ function SettingsView(props) {
         &nbsp; Threshold Settings
       </h2>
       <div className="group-four-inputs">
-        { Object.keys(plant.thresholds).map(function(key) {
+        { Object.keys(plant.thresholds).map(function(key, index) {
           return (
             <Input
+              key={index}
               label={capitalize(key)}
-              value={plant.thresholds[key]}
+              value={plant.thresholds[key].toString()}
               type="number"
               onChange={(e) => {updatePlant('threshold', e.target.value, key)}}
             />
@@ -78,11 +76,12 @@ function SettingsView(props) {
         &nbsp; Weights Settings
       </h2>
       <div className="group-four-inputs">
-        { Object.keys(plant.weights).map(function(key) {
+        { Object.keys(plant.weights).map(function(key, index) {
           return (
             <Input
+              key={index}
               label={capitalize(key)}
-              value={plant.weights[key]}
+              value={plant.weights[key].toString()}
               type="number"
               onChange={(e) => {updatePlant('weights', e.target.value, key)}}
             />

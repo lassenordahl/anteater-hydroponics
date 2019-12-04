@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './HealthView.scss';
 
 import axios from "axios";
+import moment from 'moment';
 import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faClock, faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -10,8 +11,13 @@ import { Button, Input } from 'react-rainbow-components';
 
 import {
   getPlantHealthString,
+  getPrevPlantHealthString,
   calculateHealth
 } from 'globals/health-helper';
+
+import {
+  NumberFocus
+} from 'app/containers';
 
 function HealthView(props) {
 
@@ -27,7 +33,7 @@ function HealthView(props) {
   const [prevHumidityAverage, setPHumidityAverage] = useState(null);
   const [prevLightAverage, setPLightAverage] = useState(null);
   const [prevWaterAverage, setPWaterAverage] = useState(null);
-  const [prevPlantHealth, setPPlantHealth] = useState(null);
+  const [prevPlantHealth, setPrevPlantHealth] = useState(null);
 
   // Again, I'm just copying pasting code from other components, I dont really have time to refactor with
   // other hw to do! I'll likely change this to grab averages in the root of the project and pass the calculations round
@@ -44,7 +50,7 @@ function HealthView(props) {
   useEffect(() => {
     // If we have all of them
     if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
-      setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage));
+      setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage, props.fromDate, props.toDate));
     }
   }, [tempAverage, humidityAverage, lightAverage, waterAverage]);
 
@@ -59,23 +65,26 @@ function HealthView(props) {
 
   useEffect(() => {
     // If we have all of them
-    if (prevTempAverage !== null && prevLightAverage !== null && prevHumidityAverage !== null && prevWaterAverage !== null) {
-      setPlantHealth(calculateHealth(props.plant, prevWaterAverage, prevTempAverage, prevHumidityAverage, prevLightAverage));
+    if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
+      setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage, props.currentToDate, props.currentFromDate));
     }
-  }, [prevTempAverage, prevHumidityAverage, prevLightAverage, prevWaterAverage]);
+  }, [tempAverage, humidityAverage, lightAverage, waterAverage]);
 
   useEffect(() => {
     // If we have all of them
-    if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
-      setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage));
+    if (prevTempAverage !== null && prevLightAverage !== null && prevHumidityAverage !== null && prevWaterAverage !== null) {
+      console.log(moment.duration(moment(props.prevToDate).diff(moment(props.prevFromDate))).asDays());
+      let previousDate = moment(props.prevFromDate).subtract(moment.duration(moment(props.prevToDate).diff(moment(props.prevFromDate))).asDays(), 'd');
+      console.log(previousDate.format("YYYY-MM-DD HH:mm:ss"));
+      setPrevPlantHealth(calculateHealth(props.plant, prevWaterAverage, prevTempAverage, prevHumidityAverage, prevLightAverage, previousDate, props.prevToDate));
     }
-  }, [tempAverage, humidityAverage, lightAverage, waterAverage]);
+  }, [prevTempAverage, prevHumidityAverage, prevLightAverage, prevWaterAverage]);
 
   function getAverage(plantId, endpoint, setFunction, fromDate, toDate) {
     axios.get(`/api/plant/${plantId}/data/${endpoint}/average`, {
       params: {
-        fromDate: props.currentFromDate,
-        toDate: props.currentToDate
+        fromDate: fromDate,
+        toDate: toDate
       }
     })
       .then(function (response) {
@@ -92,11 +101,22 @@ function HealthView(props) {
         <FontAwesomeIcon icon={faClock}/>
         &nbsp; Current Plant Health
       </h2>
-      {getPlantHealthString(plantHealth)}
+      <NumberFocus
+        subtitle={getPlantHealthString(plantHealth)}
+      >
+        {plantHealth !== null ? plantHealth.toFixed(1) : null}%
+      </NumberFocus>
+      
       <h2>
         <FontAwesomeIcon icon={faCalendar}/>
         &nbsp; Plant Health Trends
       </h2>
+
+      <NumberFocus
+        subtitle={getPrevPlantHealthString(plantHealth)}
+      >
+        {prevPlantHealth !== null ? prevPlantHealth.toFixed(1) : null}%
+      </NumberFocus>
       
       <div className="dialog-buttons">
         <Button

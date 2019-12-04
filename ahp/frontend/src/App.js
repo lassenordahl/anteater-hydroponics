@@ -7,7 +7,8 @@ import ThemeContext from 'app/context/ThemeContext';
 import { ToastProvider, useToasts } from 'react-toast-notifications'
 
 import {
-  Home
+  Home,
+  SelectPlant
 } from 'app/views';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <ThemeContext.Provider value={{darkmode: darkmode}}>
           <Router history={history}>
             <Switch>
+              <Route exact path='/' component={SelectPlant}/>
               <Route exact path='/:plantId' component={Home}/>
             </Switch>
           </Router>

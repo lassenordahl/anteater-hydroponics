@@ -28,10 +28,12 @@ function Card(props) {
         >
           <div>
             <div className="card-header">
-              <FontAwesomeIcon 
-                icon={getIcon(props.title)} 
-                style={{color: `rgba(${props.color.r},${props.color.g},${props.color.b},1)`}}
-              /> 
+              { props.color !== undefined ? 
+                <FontAwesomeIcon 
+                  icon={getIcon(props.title)} 
+                  style={{color: `rgba(${props.color.r},${props.color.g},${props.color.b},1)`}}
+                /> : null
+              }
               <h3>
                 {props.title}
               </h3>

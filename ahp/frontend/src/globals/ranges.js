@@ -5,48 +5,52 @@
 // 4 - Excellent
 
 
-export function getLightHealth(average) {
-  if (40 <= average) {
+// 40
+export function getLightHealth(threshold, average) {
+  if (threshold <= average) {
     return 4;
-  } else if (30 <= average) {
+  } else if (threshold - 10 <= average) {
     return 3;
-  } else if (20 <= average) {
+  } else if (threshold - 20 <= average) {
     return 2;
   } else {
     return 1;
   }
 }
 
-export function getWaterHealth(average) {
-  if (50 <= average) {
+// 50
+export function getWaterHealth(threshold, average) {
+  if (threshold <= average) {
     return 4;
-  } else if (40 <= average) {
+  } else if (threshold - 10 <= average) {
     return 3;
-  } else if (30 <= average) {
+  } else if (threshold - 20 <= average) {
     return 2;
   } else {
     return 1;
   }
 }
 
-export function getTemperatureHealth(average) {
-  if (70 <= average && average <= 80) {
+// 70
+export function getTemperatureHealth(threshold, average) {
+  if (threshold <= average && average <= threshold + 10) {
     return 4;
-  } else if (60 <= average && average <= 90) {
+  } else if (threshold - 10 <= average && average <= threshold + 20) {
     return 3;
-  } else if (50 <= average && average <= 100) {
+  } else if (threshold - 20 <= average && average <= threshold + 30) {
     return 2;
   } else {
     return 1;
   }
 }
 
-export function getHumidityHealth(average) {
-  if (60 <= average && average <= 65) {
+// 60
+export function getHumidityHealth(threshold, average) {
+  if (threshold <= average && average <= threshold + 5) {
     return 4;
-  } else if (55 <= average && average <= 70) {
+  } else if (threshold - 5 <= average && average <= threshold + 10) {
     return 3;
-  } else if (45 <= average && average <= 80) {
+  } else if (threshold - 15 <= average && average <= threshold + 20) {
     return 2;
   } else {
     return 1;

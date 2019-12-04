@@ -194,7 +194,7 @@ function Home(props) {
             className={"dialog " + (value.darkmode ? "dialog-darkmode": null)}
           >
             <SettingsView 
-              plant={plant} 
+              plant={{...plant}} 
               darkmode={value.darkmode} 
               onRequestClose={closeSettingsPanel}/>
           </Modal>
@@ -215,7 +215,7 @@ function Home(props) {
               currentFromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
               currentToDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
               prevFromDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
-              prevToDate={moment(fromDate).format("YYYY-MM-DD HH:mm:ss")}
+              prevToDate={moment(toDate).format("YYYY-MM-DD HH:mm:ss")}
             />
           </Modal>
           : null

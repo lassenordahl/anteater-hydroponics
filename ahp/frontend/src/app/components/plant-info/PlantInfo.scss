@@ -18,7 +18,7 @@
   border-bottom-right-radius: 500px;
   border-bottom-left-radius: 500px;
   border-collapse: separate;
-  transform: translateY(-80px);
+  transform: translateY(-70px);
 }
 
 .half-circle-darkmode {
@@ -29,6 +29,7 @@
 .plant-info-icons {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
   
   & > div {
     width: 24px;

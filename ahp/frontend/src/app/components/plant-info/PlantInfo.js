@@ -25,6 +25,12 @@ function PlantInfo(props) {
   const [plantHealth, setPlantHealth] = useState(null);
 
   useEffect(() => {
+    // console.log('calculating plant health', props.plant);
+    setTempAverage(null);
+    setLightAverage(null);
+    setHumidityAverage(null);
+    setWaterAverage(null);
+
     if (props.plant != null) {
       getAverage(props.plant.plantId, 'temperature', setTempAverage)
       getAverage(props.plant.plantId, 'humidity', setHumidityAverage)
@@ -34,6 +40,7 @@ function PlantInfo(props) {
    }, [props.plant])
 
   useEffect(() => {
+    // console.log('effect calculating health', [tempAverage, humidityAverage, lightAverage, waterAverage]);
     // If we have all of them
     if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
       setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage));
@@ -52,7 +59,7 @@ function PlantInfo(props) {
     if (props.plant !== null) {
       props.setHealthPanelOpen(true);
     } else {
-      addToast('Invalid plant ID> Cannot open health panel.', { appearance: 'error' });
+      addToast('Invalid plant ID. Cannot open health panel.', { appearance: 'error' });
     }
   }
 
@@ -67,7 +74,7 @@ function PlantInfo(props) {
         setFunction(response.data.average);
       })
       .catch(function(error) {
-        console.log(error);
+        addToast('Error getting average for ' + endpoint, { appearance: 'error' });
       });
   }
 
@@ -81,10 +88,12 @@ function PlantInfo(props) {
         <React.Fragment>
           { props.plant != null && plantHealth !== null ?
             <React.Fragment>
+              {/* {plantHealth} */}
               <P5Wrapper sketch={sketch(plantHealth)}></P5Wrapper>
               <h2>
                 {capitalize(props.plant.plantType)} Plant
               </h2>
+              <div style={{'height': '5px'}}></div>
               {getPlantHealthString(plantHealth)}
             </React.Fragment>
             : 
@@ -109,9 +118,7 @@ function PlantInfo(props) {
               onClick={() => openHealthPanel()}
               className="settings-button"
             />
-          </div>
-          
-          
+          </div>  
           <div className={"half-circle " + (value.darkmode ? "half-circle-darkmode" : null)}></div>
         </React.Fragment>
       )}
