@@ -3,10 +3,28 @@ var uuid = require('node-uuid');
 var AWS = require('aws-sdk');
 var sql = require('./../db');
 
-var router = express.Router();
+var router = express.Router(); // should be line 6
 
 
-AWS.config.getCredentials(function(err) {
+
+// delete me
+var hml = require('./../ml/hapmachle')
+var mlnb = require('ml-naivebayes');
+
+let hapMLContainer = new hml.hapMLContainer();
+let learner = new mlnb.GaussianNB();
+let hapMLData = hapMLContainer.getData();
+let xTrain = hml.extractXData(hapMLData);
+let yTrain = hml.extractColumn(hapMLData, hapMLData[0].length-1);
+console.log(xTrain);
+learner.train(xTrain, yTrain);
+let yTest = [[20, 61, 81, 70], [11, 76, 60, 75]];
+console.log(learner.predict(yTest));
+
+// delete me
+
+
+AWS.config.getCredentials(function(err) { // should be line 9
   if (err) console.log(err.stack);
   // credentials not loaded
   else {

@@ -68,6 +68,7 @@ function HealthView(props) {
     // If we have all of them
     if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
       setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage));
+      // Todo: use these datapoints to train the model...
     }
   }, [tempAverage, humidityAverage, lightAverage, waterAverage]);
 
