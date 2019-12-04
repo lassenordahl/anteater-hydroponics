@@ -5,7 +5,7 @@ import axios from "axios";
 import moment from 'moment';
 import { useToasts } from 'react-toast-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faClock, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faClock, faCalendar, faCompress } from '@fortawesome/free-solid-svg-icons';
 
 import { Button, Input } from 'react-rainbow-components';
 
@@ -95,6 +95,14 @@ function HealthView(props) {
       });
   }
 
+  function getComparisonString(pHealth, ppHealth) {
+    if (pHealth >= ppHealth) {
+      return 'Your current plant health over the last time period is better or equal to the last time period.';
+    } else {
+      return 'Your current plant health is doing worse than the last time period';
+    }
+  }
+
   return (
     <div className="HealthView">
       <h2>
@@ -113,10 +121,18 @@ function HealthView(props) {
       </h2>
 
       <NumberFocus
-        subtitle={getPrevPlantHealthString(plantHealth)}
+        subtitle={getPrevPlantHealthString(prevPlantHealth)}
       >
         {prevPlantHealth !== null ? prevPlantHealth.toFixed(1) : null}%
       </NumberFocus>
+
+      <h2>
+        <FontAwesomeIcon icon={faCompress}/>
+        &nbsp; Compare Health
+      </h2>
+      <p style={{textAlign: 'center'}}>
+        {getComparisonString(plantHealth, prevPlantHealth)}
+      </p>
       
       <div className="dialog-buttons">
         <Button

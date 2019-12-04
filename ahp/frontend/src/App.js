@@ -4,7 +4,8 @@ import history from './history';
 import './App.scss';
 import ThemeContext from 'app/context/ThemeContext';
 
-import { ToastProvider, useToasts } from 'react-toast-notifications'
+import { ToastProvider, useToasts } from 'react-toast-notifications';
+import axios from 'axios';
 
 import {
   Home,
@@ -14,13 +15,30 @@ import {
 function App() {
 
   const [darkmode, setDarkmode] = useState(false);
+  // const { addToast } = useToasts();
 
-  // useEffect(() => {
-  //   let interval = setInterval(() => {
-  //     setDarkmode(!darkmode);
-  //   }, 30000);
-  //   return () => clearInterval(interval);
-  // }, [darkmode]);
+  useEffect(() => {
+
+    getRecentLight();
+    // let interval = setInterval(() => {
+    //   setDarkmode(!darkmode);
+    // }, 30000);
+    // return () => clearInterval(interval);
+  }, []);
+
+  function getRecentLight() {
+    axios.get('/api/plant/5/data/light/value/recent')
+      .then(function(response) {
+        console.log(response);
+        if (response.data.mostRecentVal <= 30) {
+          setDarkmode(true);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+        // addToast('Unable to pull most recent light value', { appearance: 'error' });
+      })
+  }
 
   return (
     // style={getGradient(currentLeft, currentRight)}

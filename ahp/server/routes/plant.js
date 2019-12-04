@@ -225,7 +225,8 @@ router.get('/:plantId/data/:thresholdType/:aggregateType', function(req, res, ne
 
 router.get('/:plantId/data/:thresholdType', function(req, res, next) {
   if (req.params.plantId === undefined ||
-      req.params.thresholdType === undefined) {
+      req.params.thresholdType === undefined ||
+      req.params.thresholdType === 'p5.min.js') {
     res.status(400);
     res.send('Invalid query params');
     return;
@@ -277,7 +278,8 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
  * If no time range is specified, defaults to grabbing the most recent value.
  *
  */
-router.get('/:plantId/data/:thresholdType/recent', function(req, res, next) {
+router.get('/:plantId/data/:thresholdType/value/recent', function(req, res, next) {
+  console.log('IN RECENT');
   if (req.params.plantId === undefined ||
       req.params.thresholdType === undefined) {
     res.sendStatus(400);

@@ -98,11 +98,12 @@ function Home(props) {
     })
     .catch(function (error){
       console.log(error);
-      addToast('Unable to pull plant info', { appearance: 'error' })
+      addToast('Unable to pull plant info', { appearance: 'error' });
     });
   }
 
   function openDataPanel(title, endpoint, plant, color) {
+    // console.log('P5555', endpoint);
     setSelectedPanel({
       title: title,
       endpoint: endpoint,
@@ -203,7 +204,7 @@ function Home(props) {
         { plant !== null ? 
           <Modal
             size="large"
-            title="Plant Health Settings"
+            title="Plant Health"
             isOpen={healthPanelOpen}
             onRequestClose={() => setHealthPanelOpen(false)}  
             style={{'maxHeight': '85vh'}} 
