@@ -119,8 +119,6 @@ router.post('/:plantId', function(req, res, next) {
     }
   }
 
-  console.log(params);
-
   ddb.put(params, function(err, data) {
     if (err) {
       console.log(err);
@@ -279,7 +277,6 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
  *
  */
 router.get('/:plantId/data/:thresholdType/value/recent', function(req, res, next) {
-  console.log('IN RECENT');
   if (req.params.plantId === undefined ||
       req.params.thresholdType === undefined) {
     res.sendStatus(400);
