@@ -253,5 +253,60 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
   });
 });
 
+/**
+ * Endpoint to get the most recent value within a time range.
+ * 
+ * If no time range is specified, defaults to grabbing the most recent value.
+ *
+ */
+router.get('/:plantId/data/:thresholdType/recent', function(req, res, next) {
+  if (req.params.plantId === undefined ||
+      req.params.thresholdType === undefined) {
+    res.sendStatus(400);
+    res.end();
+    return;
+  }
+
+  let id = req.params.plantId;
+  let type = req.params.thresholdType;
+  let fromDate = req.query.fromDate;
+  let toDate = req.query.toDate;
+  let dateQuery = '';
+  let mostRecentVal = "mostRecentVal";
+  let mostRecentTime = "mostRecentTime";
+
+  if (fromDate !== undefined) {
+    dateQuery += 'AND timestamp >= \'' + fromDate + '\' ';
+  }
+  if (toDate !== undefined) {
+    dateQuery += 'AND timestamp <= \'' + toDate + '\'';
+  }
+
+  let query =
+  `SELECT plantId, ${type} as ${mostRecentVal} , timestamp as ${mostRecentTime}\
+  FROM plantData\
+  WHERE plantId=${id} ${dateQuery}\
+  ORDER BY timestamp\
+  DESC LIMIT 1`;
+
+  sql.query(query, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.sendStatus(400);
+      res.end();
+    } else {
+      if (data.length === 0) {
+        var response = {
+          id: parseInt(req.params.plantId),
+        };
+        response[mostRecentVal] = 0;
+        response[mostRecentTime] = 0;
+        res.send(response);
+      } else {
+        res.send(data[0]); // todo: check if this works....
+      }
+    }
+  });
+});
 
 module.exports = router;
