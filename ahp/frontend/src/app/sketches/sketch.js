@@ -4,7 +4,6 @@ import { tsConstructSignatureDeclaration } from "@babel/types";
 
 export default function wrapper_sketch(health) {
 
-  console.log(health);
   // 1 - 4 health for non map functions
   var step_health;
 
@@ -31,7 +30,6 @@ export default function wrapper_sketch(health) {
     let width = 200;
     let canvas_height = 400;
     let plant_height = 150 + ((health / 100) * 250);
-    console.log(plant_height);
     // let plant_height = 300;
     let node_size = 5 + ((health / 100) * 5);
 
@@ -42,7 +40,6 @@ export default function wrapper_sketch(health) {
       plant_height / 2 + 50,
       plant_height / 2 + plant_height / 8 + 50
     ]);
-    console.log(branch_points);
 
     let branch_length = 50; // Branches will be 20 nodes long
     let branch_droopiness = 3 + Math.floor((health / 100) * 8);
