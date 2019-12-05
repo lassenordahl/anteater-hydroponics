@@ -1,12 +1,12 @@
 // hapMLContainer.js
 // HAP Machine Learning Functionality
-var trainingData = "./dataset/training_data.json";
+import trainingData from './dataset/training_data';
 
 /**
  * Creates a container of objects we need for HAPAdvicePredictor.
  *
  */
-class HAPMLContainer {
+export class HAPMLContainer {
 	constructor() {
 		this.json = this._loadJson();
 		this.dataset = this._formatJsonToMatrix();
@@ -67,7 +67,7 @@ class HAPMLContainer {
      *
      */
 	_loadJson() {
-		return require(trainingData);
+		return trainingData;
 	}
 
 	/**
@@ -149,4 +149,3 @@ class HAPMLContainer {
 	 }
 }
 
-module.exports.HAPMLContainer = HAPMLContainer;

@@ -103,9 +103,13 @@ function HealthView(props) {
     }
   }
 
-  function getAdvice(lightAverage, humidityAverage, waterAverage, temperatureAverage) {
-  	let x = [[lightAverage, humidityAverage, waterAverage, temperatureAverage]];
-  	return hap.advicePredictor.predict(x);
+  function getAdvice() {
+    if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
+      let x = [[lightAverage, humidityAverage, waterAverage, tempAverage]];
+      return hap.advicePredictor.predict(x)[0].description;
+    } else {
+      return getComparisonString(plantHealth, prevPlantHealth);
+    }
   }
 
   return (
@@ -136,7 +140,7 @@ function HealthView(props) {
         &nbsp; Compare Health
       </h2>
       <p style={{textAlign: 'center'}}>
-        {getAdvice(lightAverage, humidityAverage, waterAverage, temperatureAverage)}
+        {getAdvice()}
       </p>
       
       <div className="dialog-buttons">

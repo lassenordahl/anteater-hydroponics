@@ -13,7 +13,7 @@
  *     the extracted column
  *
  */
-function extractColumn(twoDArray, specCol) {
+export function extractColumn(twoDArray, specCol) {
 	if (twoDArray.length == 0) {
 		return;
 	}
@@ -36,7 +36,7 @@ function extractColumn(twoDArray, specCol) {
  *     the X data
  *
  */
-function extractXData(twoDArray) {
+export function extractXData(twoDArray) {
 	if (twoDArray.length == 0) {
 		return;
 	}
@@ -52,5 +52,3 @@ function extractXData(twoDArray) {
 	return xData;
 }
 
-module.exports.extractColumn = extractColumn;
-module.exports.extractXData = extractXData;
