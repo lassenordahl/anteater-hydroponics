@@ -1,7 +1,3 @@
-import { tsConstructSignatureDeclaration } from "@babel/types";
-
-
-
 export default function wrapper_sketch(health) {
 
   // 1 - 4 health for non map functions

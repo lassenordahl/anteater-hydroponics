@@ -5,8 +5,8 @@
   width: 100vw;
   
   .select-plant-card {
-    width: 400px;
-    height: 600px;
+    // width: 400px;
+    // height: 600px;
     border-radius: 15px;
     transition: all ease-in-out .2s;
     z-index: 2;
@@ -17,6 +17,11 @@
       justify-content: center;
       width: 100%;
       flex-direction: column;
+
+      svg {
+        font-size: 50px;
+        margin: $smallSpacing;
+      }
     }
   }
 

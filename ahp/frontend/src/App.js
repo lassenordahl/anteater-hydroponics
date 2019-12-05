@@ -4,7 +4,7 @@ import history from './history';
 import './App.scss';
 import ThemeContext from 'app/context/ThemeContext';
 
-import { ToastProvider, useToasts } from 'react-toast-notifications';
+import { ToastProvider } from 'react-toast-notifications';
 import axios from 'axios';
 
 import {
@@ -18,12 +18,7 @@ function App() {
   // const { addToast } = useToasts();
 
   useEffect(() => {
-
     getRecentLight();
-    // let interval = setInterval(() => {
-    //   setDarkmode(!darkmode);
-    // }, 30000);
-    // return () => clearInterval(interval);
   }, []);
 
   function getRecentLight() {

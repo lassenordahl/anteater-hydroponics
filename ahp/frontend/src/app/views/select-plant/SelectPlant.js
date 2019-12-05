@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './SelectPlant.scss';
 
 import P5Wrapper from 'react-p5-wrapper';
@@ -10,7 +10,16 @@ import {
   Card
 } from 'app/containers';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLeaf } from '@fortawesome/free-solid-svg-icons';
+
 function SelectPlant(props) {
+
+  // const [showPlant, setShowPlant] = useState(false);
+
+  // useEffect(() => {
+  //   setShowPlant(true);
+  // }, []);
 
   function selectPlant(plantId) { 
     props.history.push('/' + plantId);
@@ -37,7 +46,8 @@ function SelectPlant(props) {
         onClick={() => selectPlant(5)}
       >
         <div className="plant-wrapper">
-          <P5Wrapper sketch={sketch(98)}></P5Wrapper>
+          {/* <P5Wrapper sketch={sketch(99)}></P5Wrapper> */}
+          <FontAwesomeIcon icon={faLeaf}></FontAwesomeIcon>
           <h2>Tomato Plant</h2>
           <p>When CS147 gives you tomatoes...</p>
         </div>
