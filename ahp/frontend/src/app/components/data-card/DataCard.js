@@ -44,6 +44,7 @@ function DataCard(props) {
     })
       .then(function (response) {
         if (response.data.points !== undefined && response.data.timestamps !== undefined) {
+          console.log(response.data);
           setData(response.data);
         }
       })

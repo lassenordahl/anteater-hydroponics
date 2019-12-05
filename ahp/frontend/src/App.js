@@ -18,7 +18,10 @@ function App() {
   // const { addToast } = useToasts();
 
   useEffect(() => {
-    getRecentLight();
+    let interval = setInterval(() => {
+      getRecentLight();
+    }, 10000);
+    return () => {clearInterval(interval)}
   }, []);
 
   function getRecentLight() {
@@ -27,6 +30,8 @@ function App() {
         console.log(response);
         if (response.data.mostRecentVal <= 30) {
           setDarkmode(true);
+        } else {
+          setDarkmode(false);
         }
       })
       .catch(function(error) {
