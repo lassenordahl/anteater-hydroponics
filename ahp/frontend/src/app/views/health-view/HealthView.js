@@ -19,6 +19,8 @@ import {
   NumberFocus
 } from 'app/containers';
 
+var hap = require('./../../ml/hapAdvicePredictor');
+
 function HealthView(props) {
 
   const { addToast } = useToasts();
@@ -101,6 +103,11 @@ function HealthView(props) {
     }
   }
 
+  function getAdvice(lightAverage, humidityAverage, waterAverage, temperatureAverage) {
+  	let x = [[lightAverage, humidityAverage, waterAverage, temperatureAverage]];
+  	return hap.advicePredictor.predict(x);
+  }
+
   return (
     <div className="HealthView">
       <h2>
@@ -129,7 +136,7 @@ function HealthView(props) {
         &nbsp; Compare Health
       </h2>
       <p style={{textAlign: 'center'}}>
-        {getComparisonString(plantHealth, prevPlantHealth)}
+        {getAdvice(lightAverage, humidityAverage, waterAverage, temperatureAverage)}
       </p>
       
       <div className="dialog-buttons">
