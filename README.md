@@ -61,3 +61,18 @@ A health panel shows the current plant health, plant health of the time period e
 ## Final Thoughts
 
 Overall, this project was super fun to work on. The challenge of the rendered plant combined with making sure our application is fully linked up to the cloud was hectic, but satisfying to complete in the 6 weeks the project took to develop. In the future we would like to add functionality allowing the user to input their view of the health of the plant based on what they see, which we would use to further train our models to more accurately give plant healthcare advice. Go Hydroponics!
+
+## Work Distribution
+
+### Lasse Nordahl
+Ask me about..
+* Why I should've paid closer attention to the waves unit in Algebra 2
+* Front-end development with React and P5JS
+* REST API development using NodeJS
+* Why I need to remember to close AWS instances to avoid overage charges
+* AWS Cloud Platform with DynamoDB and RDS
+  
+### Jesse Chong
+
+Ask me about..
+
