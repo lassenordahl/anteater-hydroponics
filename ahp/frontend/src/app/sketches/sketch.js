@@ -1,4 +1,5 @@
 export default function wrapper_sketch(health) {
+  console.log(health);
 
   // 1 - 4 health for non map functions
   var step_health;

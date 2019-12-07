@@ -72,7 +72,7 @@ function Home(props) {
   const [selectedPanel, setSelectedPanel] = useState(null);
   const [plant, setPlant] = useState(null);
   const [fromDate, setFromDate] = useState(moment().subtract(10, 'd').toDate());
-  const [toDate, setToDate] = useState(moment().toDate());
+  const [toDate, setToDate] = useState(moment().add(1, 'd').toDate());
 
   useEffect(() => {
     let plantId = + props.match.params.plantId;

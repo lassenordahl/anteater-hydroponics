@@ -19,6 +19,8 @@ import {
   NumberFocus
 } from 'app/containers';
 
+var hap = require('./../../ml/hapAdvicePredictor');
+
 function HealthView(props) {
 
   const { addToast } = useToasts();
@@ -56,27 +58,25 @@ function HealthView(props) {
 
   useEffect(() => {
     if (props.plant != null) {
-      getAverage(props.plant.plantId, 'temperature', setPTempAverage)
-      getAverage(props.plant.plantId, 'humidity', setPHumidityAverage)
-      getAverage(props.plant.plantId, 'light', setPLightAverage)
-      getAverage(props.plant.plantId, 'water', setPWaterAverage)
+      let previousDate = moment(props.prevFromDate).subtract(moment.duration(moment(props.prevToDate).diff(moment(props.prevFromDate))).asDays(), 'd');
+      getAverage(props.plant.plantId, 'temperature', setPTempAverage, props.previousDate, props.currentFromDate)
+      getAverage(props.plant.plantId, 'humidity', setPHumidityAverage, props.previousDate, props.currentFromDate)
+      getAverage(props.plant.plantId, 'light', setPLightAverage, props.previousDate, props.currentFromDate)
+      getAverage(props.plant.plantId, 'water', setPWaterAverage, props.previousDate, props.currentFromDate)
     }
   }, [props.plant])
 
   useEffect(() => {
     // If we have all of them
     if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
-      setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage, props.currentToDate, props.currentFromDate));
+      setPlantHealth(calculateHealth(props.plant, waterAverage, tempAverage, humidityAverage, lightAverage));
     }
   }, [tempAverage, humidityAverage, lightAverage, waterAverage]);
 
   useEffect(() => {
     // If we have all of them
     if (prevTempAverage !== null && prevLightAverage !== null && prevHumidityAverage !== null && prevWaterAverage !== null) {
-      console.log(moment.duration(moment(props.prevToDate).diff(moment(props.prevFromDate))).asDays());
-      let previousDate = moment(props.prevFromDate).subtract(moment.duration(moment(props.prevToDate).diff(moment(props.prevFromDate))).asDays(), 'd');
-      console.log(previousDate.format("YYYY-MM-DD HH:mm:ss"));
-      setPrevPlantHealth(calculateHealth(props.plant, prevWaterAverage, prevTempAverage, prevHumidityAverage, prevLightAverage, previousDate, props.prevToDate));
+      setPrevPlantHealth(calculateHealth(props.plant, prevWaterAverage, prevTempAverage, prevHumidityAverage, prevLightAverage));
     }
   }, [prevTempAverage, prevHumidityAverage, prevLightAverage, prevWaterAverage]);
 
@@ -100,6 +100,15 @@ function HealthView(props) {
       return 'Your current plant health over the last time period is better or equal to the last time period.';
     } else {
       return 'Your current plant health is doing worse than the last time period';
+    }
+  }
+
+  function getAdvice() {
+    if (tempAverage !== null && lightAverage !== null && humidityAverage !== null && waterAverage !== null) {
+      let x = [[lightAverage, humidityAverage, waterAverage, tempAverage]];
+      return hap.advicePredictor.predict(x)[0].description;
+    } else {
+      return getComparisonString(plantHealth, prevPlantHealth);
     }
   }
 
@@ -131,7 +140,7 @@ function HealthView(props) {
         &nbsp; Compare Health
       </h2>
       <p style={{textAlign: 'center'}}>
-        {getComparisonString(plantHealth, prevPlantHealth)}
+        {getAdvice()}
       </p>
       
       <div className="dialog-buttons">

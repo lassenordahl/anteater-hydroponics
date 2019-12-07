@@ -1,4 +1,4 @@
-{
+export default {
     "LightAdvice1": {
         "type": "light",
         "description": "Increase lighting by moving your plant under a lamp.",

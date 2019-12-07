@@ -243,6 +243,7 @@ router.get('/:plantId/data/:thresholdType', function(req, res, next) {
       } else {
         let return_data = data.map(function(point) { return point[type] });
         let return_timestamps = data.map(function(point) { return point.timestamp });
+        console.log(return_data.length);
         res.send({
           points: return_data,
           timestamps: return_timestamps

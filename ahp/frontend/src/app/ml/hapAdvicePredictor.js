@@ -1,7 +1,16 @@
 // hapAdvicePredictor.js
 // HAP Machine Learning Functionality
-var hmlc = require('./hapMLContainer.js')
-var hmlh = require('./hapMLHelpers.js')
+// var hmlc = require('./hapMLContainer.js')
+// var hmlh = require('./hapMLHelpers.js')
+
+import {
+	HAPMLContainer
+} from './hapMLContainer';
+
+import {
+	extractXData,
+	extractColumn
+} from './hapMLHelpers';
 var mlnb = require('ml-naivebayes');
 
 /**
@@ -12,7 +21,7 @@ var mlnb = require('ml-naivebayes');
  */
 class HAPAdvicePredictor {
 	constructor() {
-		this.hapMLContainer = new hmlc.HAPMLContainer();
+		this.hapMLContainer = new HAPMLContainer();
 		this.learner = this._selectModel();
 		// Train the learner now...
 		this._trainLearner();
@@ -42,8 +51,8 @@ class HAPAdvicePredictor {
 	 */
 	_trainLearner() {
 		let hapMLData = this.hapMLContainer.getData();
-		let xTrain = hmlh.extractXData(hapMLData);
-		let yTrain = hmlh.extractColumn(hapMLData, hapMLData[0].length-1);
+		let xTrain = extractXData(hapMLData);
+		let yTrain = extractColumn(hapMLData, hapMLData[0].length-1);
 		// console.log(xTrain);
 		this.learner.train(xTrain, yTrain);
 	}
@@ -77,5 +86,7 @@ class HAPAdvicePredictor {
 
 // Initialize the predictor once to avoid retraining the model.
 let advicePredictor = new HAPAdvicePredictor();
+export { advicePredictor };
 
-module.exports.advicePredictor = advicePredictor;
+// module.exports.advicePredictor = advicePredictor;
+
