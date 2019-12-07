@@ -28,24 +28,36 @@ With the extra time we had left, we were able to add in a prototype machine lear
 ## Screenshots
 
 ### Select Plant Screen
-![SelectPlant](https://imgur.com/dJ96FPo)
+![SelectPlant](https://user-images.githubusercontent.com/13127625/70379590-7fdc2c80-18e3-11ea-97b7-d0a308a331ca.png)
 
+We showed a select plant screen that showed all available plants in the database.
+
+### Plant Dashboard
+![PlantDashboard](https://user-images.githubusercontent.com/13127625/70379600-92eefc80-18e3-11ea-8891-d19285089f47.png)
+
+Above is the dashboard for the program. It features data panels that shows the data points, thresholds, and averages for the date specified. To the left is a plant rendered with p5js that represents the health of the plant based on user defined heuristics.
+
+### Metric View
+![MetricView](https://user-images.githubusercontent.com/13127625/70379610-aac68080-18e3-11ea-8647-1d8e3ffe1a0f.png)
+
+The user can click a data card to open an expanded view, showing the minimum, maximum, and average values for the data type.
+
+### System Wide Darkmode
+![Darkmode](https://user-images.githubusercontent.com/13127625/70379632-eeb98580-18e3-11ea-85ad-e6ab90efeda2.png)
+
+A system wide darkmode was developed for the program as well. This darkmode turns on when the most recent light value from the arduino shows a light level low enough to be considered bedtime.
 
 ### Select Plant Screen
-![SelectPlant](https://imgur.com/dJ96FPo)
+![SelectPlant](https://user-images.githubusercontent.com/13127625/70379640-fbd67480-18e3-11ea-8cf4-062a42fb8149.png)
+
+A settings panel is available for changing the plant name, thresholds, and weights for how much each data type affects the overall health of the plant.
 
 
-### Select Plant Screen
-![SelectPlant](https://imgur.com/dJ96FPo)
+### Health View & Curated Advice
+![HealthViw](https://user-images.githubusercontent.com/13127625/70379621-c2056e00-18e3-11ea-92e7-d2c9d67425d1.png)
 
+A health panel shows the current plant health, plant health of the time period earlier than the defined date range (if you selected to show data for the last week, this plant health would show the health from two weeks ago), and finally a piece of curated advice chosen by our ML model for what is affecting the plant health the most.
 
-### Select Plant Screen
-![SelectPlant](https://imgur.com/dJ96FPo)
+## Final Thoughts
 
-
-### Select Plant Screen
-![SelectPlant](https://imgur.com/dJ96FPo)
-
-
-### Select Plant Screen
-![SelectPlant](https://imgur.com/dJ96FPo)
+Overall, this project was super fun to work on. The challenge of the rendered plant combined with making sure our application is fully linked up to the cloud was hectic, but satisfying to complete in the 6 weeks the project took to develop. In the future we would like to add functionality allowing the user to input their view of the health of the plant based on what they see, which we would use to further train our models to more accurately give plant healthcare advice. Go Hydroponics!
